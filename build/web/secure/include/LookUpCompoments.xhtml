@@ -1,0 +1,10 @@
+<div    xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"> 
+<h:outputLabel value="#{lookupsMSG.code}" rendered="#{navigator.currentView.lookUpView.codeRequried}"/>
+<h:inputText value="#{navigator.currentView.lookUpView.DAO.modelWrapper.code}" rendered="#{navigator.currentView.lookUpView.codeRequried}" required="true" />
+<h:outputLabel value="#{lookupsMSG.title}" />
+<h:inputText value="#{navigator.currentView.lookUpView.DAO.modelWrapper.title}" required="true" />
+</div>            

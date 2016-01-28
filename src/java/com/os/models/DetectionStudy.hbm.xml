@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.DetectionStudy" table="detection_study" catalog="kclinic" optimistic-lock="version">
+        <id name="detectionStudyId" type="java.lang.Integer">
+            <column name="detection_study_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="caseStudy" class="com.os.models.CaseStudy" fetch="select">
+            <column name="case_study_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="detection" class="com.os.models.Detection" fetch="select">
+            <column name="detection_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

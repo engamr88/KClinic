@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.Category" table="category" catalog="kclinic" optimistic-lock="version">
+        <id name="categoryId" type="java.lang.Integer">
+            <column name="category_id" />
+            <generator class="identity" />
+        </id>
+        <property name="categoryTitle" type="string">
+            <column name="category_title" length="65535" not-null="true" />
+        </property>
+        <set name="priceLists" table="price_list" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="category_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.PriceList" />
+        </set>
+        <set name="quests" table="quest" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="category_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.Quest" />
+        </set>
+        <set name="reservations" table="reservation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="category_id" />
+            </key>
+            <one-to-many class="com.os.models.Reservation" />
+        </set>
+    </class>
+</hibernate-mapping>

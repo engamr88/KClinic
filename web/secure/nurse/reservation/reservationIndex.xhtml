@@ -1,0 +1,66 @@
+<h:panelGroup id="profile" xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:p="http://primefaces.org/ui"
+              >
+    <div class="page-header position-relative">
+        <h1>
+            #{reservationView.viewTtile}
+        </h1>
+    </div>
+    <h:panelGroup id="reservationGroup">
+        <style>
+            .ui-datepicker{
+                width: 100%;
+            }
+            .ui-datepicker table {
+                width: 100%;
+                font-size: 1.4em;
+                border-collapse: collapse;
+                margin: 0 0 .4em;
+            }
+            .ui-datepicker td span, .ui-datepicker td a {
+                display: block;
+                padding: .2em;
+                text-align: right;
+                text-decoration: none;
+                height: 100px;
+                font-weight: bold;
+                font-size: x-large;
+            }
+        </style>
+        <div class="row-fluid">
+            <div class="span6" style="border: 1px solid;">
+                <div class="control-group">
+                    <h:outputLabel value="#{commonMSG.date}" styleClass="control-label"/>
+                    <div class="controls">
+                        <h:outputLabel value="#{reservationView.cal}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputLabel>
+                    </div>
+                </div>
+                <p:commandLink styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="PF('reservationDlg').show();"/>
+                <p:dataList value="#{reservationView.reservationList}" var="reservation" type="ordered">
+                    <h:outputLabel value="#{reservation.patient.patientFullName}"/>
+                </p:dataList>
+            </div>
+            <div class="span6">
+                <p:calendar id="inline" style="width: 100%"  mode="inline" value="#{reservationView.cal}" >
+                    <p:ajax event="dateSelect" listener="#{reservationView.onDateReservations()}" update="reservationGroup" />
+                </p:calendar>
+            </div>
+        </div>
+    </h:panelGroup>
+    <script>
+                PrimeFaces.locales ['ar'] = { closeText: 'إغلق', prevText: 'إلى الخلف', nextText: 'إلى الأمام', currentText: 'بداية',
+                    monthNames: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر' ],
+                    monthNamesShort: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر' ],
+                    dayNames: ['يوم الأحد‎', 'يوم الإثنين‎', 'يوم الثلاثاء‎', '‏يوم الأَرْبعاء‎', '‏يوم الخَمِيس‎', 'يوم الجُمْعَة‎‎', 'يوم السَّبْت'],
+                    dayNamesShort: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
+                    dayNamesMin: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
+                    weekHeader: 'الأسبوع', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'',
+                    timeOnlyTitle: 'الوقت فقط', timeText: 'الوقت', hourText: 'ساعة', minuteText: 'دقيقة', secondText: 'ثانية',
+                    ampm: false, month: 'الشهر', week: 'الأسبوع', day: 'اليوم', allDayText: 'سا ئراليوم' };
+    </script>
+</h:panelGroup>

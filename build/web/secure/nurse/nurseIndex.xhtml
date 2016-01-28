@@ -1,0 +1,110 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../resources/themes/ace/template/nurse/template.xhtml">
+
+    <ui:define name="content">
+        <div class="row-fluid">
+            <div class="span12">
+                <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+                    <div class="tabbable #{localeBean.dirction=='RTL'?'tabs-right':'tabs-left'}">
+                        <ul class="nav nav-tabs" id="myTab3">
+                            <li class="active">
+                                <a data-toggle="tab" href="#home3">
+                                    <i class="pink icon-dashboard bigger-110"></i>
+                                    #{reservationMSG.title}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#profile3">
+                                    <i class="blue icon-user bigger-110"></i>
+
+                                    #{patientMSG.title}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#dropdown13">
+                                    <i class="icon-rocket"></i>
+                                    More
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+
+
+                            <div id="profile3" class="tab-pane">
+                                <ui:include src="patientRegister/patientIndex.xhtml"/>
+                            </div>
+                            <div id="home3" class="tab-pane in active">
+                                <ui:include src="reservation/reservationIndex.xhtml"/>
+                            </div>
+                            <div id="dropdown13" class="tab-pane">
+                                <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade.</p>
+                                <p>Raw denim you probably haven't heard of them jean shorts Austin.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p:dialog closable="false"  modal="true" draggable="false" resizable="false" widgetVar="confirmation" header="#{commonMSG.deleteConfirm}" >
+                        <p:panelGrid columns="2">
+                            <h:graphicImage id="image"
+                                            alt="jsf-sun"
+                                            url="/resources/images/trashIcon.png">
+                            </h:graphicImage> 
+
+                            <h:outputLabel value="#{commonMSG.deleteMSG}" style="font-weight: bolder"/>
+
+                        </p:panelGrid>
+                        <f:facet name="footer">
+                            <p:panelGrid columns="2">
+                                <p:commandButton id="aa" process="aa" style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{navigator.currentView.delete()}" update="form:patientRegGoup" 
+                                                 oncomplete="PF('confirmation').hide();"/>
+                                <p:commandButton immediate="true"
+                                                 style="color: red"
+                                                 value="#{commonMSG.no}"
+                                                 title="#{commonMSG.no}"
+                                                 oncomplete="PF('confirmation').hide();return false;" 
+                                                 action="#{navigator.currentView.clear()}"
+                                                 id="noAction" process="noAction"
+                                                 update="form:patientRegGoup"/>
+                            </p:panelGrid>
+                        </f:facet>
+                    </p:dialog>
+                    <p:dialog id="reservDlg" closable="false"  modal="true" draggable="false" resizable="false" widgetVar="reservationDlg" header="#{reservationMSG.title}" >
+                        <h:outputLabel value="#{reservationMSG.patientFullName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <p:autoComplete var="patient" style="width: 100% !important;" styleClass="name-input" value="#{reservationView.selectedPatient}" converter="patient"
+                                            id="customPojo" completeMethod="#{reservationView.completePlayerByName}"
+                                            itemLabel="#{patient.patientFullName}" itemValue="#{patient}" >
+
+                                <p:column>
+                                    #{patient.patientFullName}
+                                </p:column>
+                            </p:autoComplete>
+                        </div>
+                        <div class="control-group">
+                            <h:outputLabel  value="#{questMSG.slcCategory}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                            <div class="controls">
+                                <h:selectOneMenu id="reservCategory" value="#{reservationView.categoryId}">
+                                    <f:selectItem itemLabel="#{questMSG.slcCategory}" itemValue="-1"/>
+                                    <f:selectItems value="#{reservationView.categoryList}" var="resCat" itemLabel="#{resCat.categoryTitle}" itemValue="#{resCat.id}"/>
+                                    <!--<p:ajax event="change" listener="{reservationView.onCategorySelection()}" update="reservationGroup"/>-->
+                                </h:selectOneMenu>
+                                <span class="help-inline">
+                                    <p:message for="reservCategory"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <p:commandLink value="#{commonMSG.close}" styleClass="btn btn-danger" onclick="PF('reservationDlg').hide();" update="reservDlg"/>
+                        </div>
+                    </p:dialog>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

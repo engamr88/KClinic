@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.PriceList" table="price_list" catalog="kclinic" optimistic-lock="version">
+        <id name="priceListId" type="java.lang.Integer">
+            <column name="price_list_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="category" class="com.os.models.Category" fetch="select">
+            <column name="category_id" not-null="true" />
+        </many-to-one>
+        <property name="priceType" type="string">
+            <column name="price_type" length="65535" not-null="true" />
+        </property>
+        <property name="priceAmount" type="double">
+            <column name="price_amount" precision="10" not-null="true" />
+        </property>
+        <set name="reservations" table="reservation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="price_list_id" />
+            </key>
+            <one-to-many class="com.os.models.Reservation" />
+        </set>
+    </class>
+</hibernate-mapping>

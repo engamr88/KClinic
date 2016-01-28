@@ -1,0 +1,64 @@
+<div class="form-actions"  xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui">
+
+
+    <p:commandButton  label="save"  rendered="#{!navigator.currentView.updateMode and navigator.currentView.datablesaveMergeVisiable==false}"  
+                      styleClass="btn   btn-success no-border"  
+                      action="#{navigator.currentView.save()}" 
+                      value="#{commonMSG.save}" 
+                      title="#{commonMSG.save}" 
+                      oncomplete="backToTop();return false;"
+                      update="form,:table-form,messages"
+                      ajax="#{navigator.currentView.ajaxStatus}"/>
+
+    <p:commandButton  label="save" rendered="#{!navigator.currentView.updateMode and navigator.currentView.datablesaveMergeVisiable==false
+                                               and navigator.currentView.saveAndCont}"  
+                      styleClass="btn   btn-success no-border" 
+                      action="#{navigator.currentView.saveAndCont()}" 
+                      value="#{commonMSG.saveAndCont}" 
+                      title="#{commonMSG.saveAndCont}" 
+                      oncomplete="backToTop();return false;"
+                      update="form,:table-form,messages"
+                      ajax="#{navigator.currentView.ajaxStatus}"/>
+
+    <p:commandButton  label="saveMerge"  rendered="#{!navigator.currentView.updateMode and navigator.currentView.datablesaveMergeVisiable==true}"  
+                      styleClass="btn   btn-success no-border" 
+                      action="#{navigator.currentView.saveMerge()}" 
+                      value="#{commonMSG.save}" 
+                      title="#{commonMSG.save}" 
+                      oncomplete="backToTop();return false;"
+                      update="form,:table-form,messages"
+                      ajax="#{navigator.currentView.ajaxStatus}"/>
+
+
+    <p:commandButton  styleClass="btn   btn-success no-border"   
+                      rendered="#{navigator.currentView.updateMode}" 
+                      value="#{commonMSG.update}" 
+                      title="#{commonMSG.update}" 
+                      oncomplete="backToTop();return false;"
+                      action="#{navigator.currentView.update()}"  
+                      update="form,:table-form,messages"
+                      ajax="#{navigator.currentView.ajaxStatus}"
+                      />
+    <p:commandButton  styleClass="btn   btn-success no-border"  
+                      rendered="#{navigator.currentView.updateMode
+                                  and navigator.currentView.updateAndCont==true}" 
+                      value="#{commonMSG.updateAndCont}" 
+                      title="#{commonMSG.updateAndCont}" 
+                      oncomplete="backToTop();return false;"
+                      action="#{navigator.currentView.updateAndContinue()}"  
+                      update="form,:table-form,messages"
+                      ajax="#{navigator.currentView.ajaxStatus}"
+                      />
+    <p:commandButton immediate="true" styleClass="btn no-border" 
+                     value="#{commonMSG.clear}" 
+                     title="#{commonMSG.clear}" 
+                     oncomplete="backToTop();return false;" 
+                     action="#{navigator.currentView.clear()}" 
+                     process="clearBtn" 
+                     rendered="#{navigator.currentView.clearBtnVisible}"
+                     id="clearBtn" update="form"/>
+</div>

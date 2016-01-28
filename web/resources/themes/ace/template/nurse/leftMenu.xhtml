@@ -1,0 +1,89 @@
+<h:panelGroup xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"> 
+    <a class="menu-toggler" id="menu-toggler" href="#">
+        <span class="menu-text"></span>
+    </a>
+    <!-- start: Main Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts" >
+            <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large" style="background-color: #332929;color: white;">
+                <strong>#{menuMSG.adminBar} </strong>
+            </div>
+
+            <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+                <span class="btn btn-success"></span>
+
+                <span class="btn btn-info"></span>
+
+                <span class="btn btn-warning"></span>
+
+                <span class="btn btn-danger"></span>
+            </div>
+
+        </div><!--#sidebar-shortcuts-->
+
+
+
+
+
+        <ul class="nav nav-list">
+            <li class="#{localeBean.parentMenuTitle eq 'coreSettings' ?'active open':''} assignPriv" >
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-building"></i>
+                    <span class="menu-text"> #{menuMSG.coreSettings} </span>
+
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+                <ul class="submenu">
+                   
+                </ul>
+            </li>
+            <li class="#{localeBean.parentMenuTitle eq 'properties' ?'active open':''} assignPriv" >
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-building"></i>
+                    <span class="menu-text"> #{menuMSG.properties} </span>
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+                <ul class="submenu">
+                   
+                </ul>
+            </li>
+            <li class="#{localeBean.parentMenuTitle eq 'users' ?'active open':''} assignPriv" >
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-building"></i>
+                    <span class="menu-text"> #{menuMSG.users} </span>
+
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+                <ul class="submenu">
+                    <li class="#{localeBean.currentMenuTitle eq 'employees' ?'active':''} assignPriv">
+                        <a href="#{request.contextPath}/secure/employee/employeeIndex.xhtml">
+                            <i class="icon-building"></i>
+                            <span class="menu-text"> #{menuMSG.employees} </span>
+                        </a>
+                    </li>
+
+                    <li class="#{localeBean.currentMenuTitle eq 'changeAdmin' ?'active':''} assignPriv">
+                        <a href="#{request.contextPath}/secure/changePassword/changePasswordIndex.xhtml">
+                            <i class="icon-building"></i>
+                            <span class="menu-text"> #{menuMSG.changeAdmin} </span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="#{localeBean.parentMenuTitle eq 'reports' ?'active open':''} assignPriv" >
+                <a href="#" class="dropdown-toggle">
+                    <i class="icon-building"></i>
+                    <span class="menu-text"> #{menuMSG.reports} </span>
+                    <b class="arrow icon-angle-down"></b>
+                </a>
+                <ul class="submenu">
+                   
+                </ul>
+            </li>
+        </ul><!--/.nav-list-->
+    </div>
+</h:panelGroup>         

@@ -1,0 +1,166 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../resources/themes/ace/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="page-header position-relative">
+            <h1>
+                #{employeeView.viewTtile}
+            </h1>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <ui:include src="../include/RequiredFields.xhtml"/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <f:event type="preRenderView" listener="#{loginModelView.redirectForViewForms('users', 'employees')}" />
+                <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+                    <p:messages id="messages" showDetail="true"  autoUpdate="true" closable="true" globalOnly="true"/> 
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userFullName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:inputText value="#{employeeView.DAO.modelWrapper.model.userFullName}"
+                                         id="userFullName"
+                                         required="true"
+                                         styleClass="name-input"
+                                         requiredMessage="#{employeeMSG.enterInfo}"/>
+                            <span class="help-inline">
+                                <p:message for="userFullName"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userMobile}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:inputText value="#{employeeView.DAO.modelWrapper.model.userMobile}"
+                                         id="userMobile"
+                                         required="true"
+                                         styleClass="number-input"
+                                         requiredMessage="#{employeeMSG.enterInfo}"/>
+                            <span class="help-inline">
+                                <p:message for="userMobile"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userPhone}" styleClass="control-label"/>
+                        <div class="controls">
+                            <h:inputText value="#{employeeView.DAO.modelWrapper.model.userPhone}"
+                                         id="userPhone"
+                                         styleClass="number-input"/>
+                            <span class="help-inline">
+                                <p:message for="userPhone"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userAddress}" styleClass="control-label"/>
+                        <div class="controls">
+                            <h:inputTextarea value="#{employeeView.DAO.modelWrapper.model.userAddress}"
+                                         id="userAddress"
+                                         styleClass="name-input"/>
+                            <span class="help-inline">
+                                <p:message for="userAddress"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userEmail}" styleClass="control-label"/>
+                        <div class="controls">
+                            <h:inputText value="#{employeeView.DAO.modelWrapper.model.userEmail}"
+                                         id="userEmail"
+                                         styleClass="name-input"/>
+                            <span class="help-inline">
+                                <p:message for="userEmail"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userGender}" styleClass="control-label"/>
+                        <div class="controls">
+                            <p:selectOneRadio id="userGender" value="#{employeeView.DAO.modelWrapper.model.userGender}">
+                                <f:selectItem itemLabel="#{employeeMSG.male}" itemValue="1" />
+                                <f:selectItem itemLabel="#{employeeMSG.female}" itemValue="2" />
+                            </p:selectOneRadio>
+                            <span class="help-inline">
+                                <p:message for="userGender"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userBirthdate}" styleClass="control-label"/>
+                        <div class="controls">
+                            <p:calendar value="#{employeeView.DAO.modelWrapper.model.userBirthdate}" pattern="dd/MM/yyyy"
+                                        id="userBirthdate"/>
+                            <span class="help-inline">
+                                <p:message for="userBirthdate"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{employeeMSG.userNationalNumber}" styleClass="control-label"/>
+                        <div class="controls">
+                            <h:inputText value="#{employeeView.DAO.modelWrapper.model.userNationalNumber}"
+                                         id="userNationalNumber"
+                                         converter="javax.faces.Integer" converterMessage="#{employeeMSG.nationalNumNumericReq}"
+                                         styleClass="number-input"/>
+                            <span class="help-inline">
+                                <p:message for="userNationalNumber"/>
+                            </span>
+                        </div>
+                    </div>
+                    <hr/>
+                    <h:panelGroup rendered="#{employeeView.showPass}">
+                        <div class="control-group">
+                            <h:outputLabel value="#{employeeMSG.userName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                            <div class="controls">
+                                <h:inputText value="#{employeeView.DAO.modelWrapper.model.userName}"
+                                             id="userName"
+                                             styleClass="name-input"
+                                             required="true"
+                                             requiredMessage="#{employeeMSG.enterInfo}"/>
+                                <span class="help-inline">
+                                    <p:message for="userName"/>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <h:outputLabel value="#{employeeMSG.userPassword}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                            <div class="controls">
+                                <p:password value="#{employeeView.DAO.modelWrapper.model.userPassword}"
+                                            id="userPassword"
+                                            required="true"
+                                            styleClass="name-input"
+                                            requiredMessage="#{employeeMSG.enterInfo}"/>
+                                <span class="help-inline">
+                                    <p:message for="userPassword"/>
+                                </span>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{!employeeView.showPass}">
+                        <p:commandLink value="#{employeeMSG.editPass}" update="form">
+                            <f:setPropertyActionListener target="#{employeeView.showPass}" value="true"/>
+                        </p:commandLink>
+                    </h:panelGroup>
+                    <ui:include src="../include/CommonActions.xhtml" />
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

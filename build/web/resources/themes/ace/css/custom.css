@@ -1,0 +1,268 @@
+/*body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+    background-color: #F9F9F9 !important;
+     background-image: url("#{resource['images:details_bg.jpg']}") !important; 
+    background-repeat: repeat-x;
+}*/
+.sidebar-nav {
+    padding: 9px 0;
+}
+
+@media (max-width: 980px) {
+    /* Enable use of floated navbar text */
+    .navbar-text.pull-right {
+        float: none;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+}
+.ui-widget,.ui-paginator { font-family: tahoma; font-size: 90% !important;} 
+.ui-widget-header{font-size: 13pt; padding: 5px !important;}
+.ui-message-info,.ui-message-error,.ui-message-warn,.ui-message-fatal {
+    border: 0!important;
+    margin: 0!important;
+    padding: 0!important;
+    /* width: 60px !important;*/
+}
+.ui-message-error-icon{
+    background: none !important;
+}
+.ui-dialog-title{ color: #478fca!important; 
+                  font-weight: normal!important; 
+                  font-size: 22px!important;
+                  margin: 10px  !important;
+                  line-height: 20px!important;
+
+                  text-rendering: optimizelegibility!important;
+}
+
+.ui-messages-error,.ui-message-error {
+    color: #d16e6c!important;
+    background-color: #fff!important;
+    margin: 0px;
+}
+/*.ui-datatable-tablewrapper{display: block  !important;}*/
+table td{border: 0px !important; }
+table th{border: 0px !important; }
+table td{border-top:  0px solid lightgray !important; }
+
+.ui-panelgrid{ border: none !important; border-collapse: inherit !important; }
+.ui-panelgrid td{background-color: transparent !important; border: none !important; border-bottom: 0px solid #F5F5F5!important;}
+.ui-widget-content{ background-color: #fff !important;}
+.title{ color: white !important; background-color: #0088CC !important; margin-top:  0px !important; padding:   2px !important; text-indent: 5px !important; }
+.ui-layout, .ui-layout-doc, .ui-layout-unit, .ui-layout-wrap, .ui-layout-bd, .ui-layout-hd{border: none;}
+/*.ui-widget-header {
+  background-color: transparent !important;
+  background-position:initial initial;
+  background-repeat:initial initial;
+  border:0px solid #EEEEEE !important;
+  color:#333333;
+  font-weight:bold;
+}*/
+
+
+
+.main-form{ width: 100%;}
+.code-input{ width: 30%; font: 14px tahoma  !important;}
+.name-input{ width: 80%;}
+.address-input{ width: 100%;}
+.number-input{ width: 20%;}
+
+.save-btn{ width: 80px; height: 20px;
+           background-image: url("#{resource['images:save.png']}") !important; 
+           border: 0px !important;
+           margin: 5px !important;
+}
+
+.update-btn{ width: 200px;}
+.delete-btn{ width: 30px;}
+.select-btn{ width: 30px;}
+
+.form-col1{ width: 30%;}
+.form-col2{ width: 40%;}
+.form-col3{ width: 30%;}
+.form-col4{ width: 200px;}
+
+
+.save-btn {
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+    background-color: #006dcc !important;
+    *background-color: #0044cc !important;
+    background-image: -moz-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc)) !important;
+    background-image: -webkit-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: -o-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: linear-gradient(to bottom, #0088cc, #0044cc) !important;
+    background-repeat: repeat-x !important;
+    border-color: #0044cc #0044cc #002a80 !important;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+    padding: 0px !important;
+    height: 35px !important;
+}
+.save-btn:hover,
+.save-btn:focus,
+.save-btn:active,
+.save-btn.active,
+.save-btn.disabled,
+.save-btn[disabled] {
+    color: #ffffff !important;
+    background-color: #0044cc !important;
+    *background-color: #003bb3 !important;
+}
+
+
+
+.clear-btn {
+    color: #ffffff !important;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25) !important;
+    background-color: #006dcc !important;
+    *background-color: #0044cc !important;
+    background-image: -moz-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0088cc), to(#0044cc)) !important;
+    background-image: -webkit-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: -o-linear-gradient(top, #0088cc, #0044cc) !important;
+    background-image: linear-gradient(to bottom, #0088cc, #0044cc) !important;
+    background-repeat: repeat-x !important;
+    border-color: #0044cc #0044cc #002a80 !important;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff0088cc', endColorstr='#ff0044cc', GradientType=0) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false) !important;
+    padding: 0px !important;
+    height: 35px !important;
+}
+.clear-btn:hover,
+.clear-btn:focus,
+.clear-btn:active,
+.clear-btn.active,
+.clear-btn.disabled,
+.clear-btn[disabled] {
+    color: #ffffff !important;
+    background-color: #0044cc !important;
+    *background-color: #003bb3 !important;
+}
+
+table th.ui-state-default{
+
+    background-image:  -o-linear-gradient(top, #F7F7F7, #EDEDED) !important;
+    background-image:  -webkit-gradient(linear, 0 0, 0 100%, from(#F7F7F7), to(#EDEDED))!important;
+    box-shadow: none;
+    -webkit-box-shadow: none !important;
+    color:  #707070;
+    border: 0px;
+
+}
+table th.ui-state-default.hover{
+    background-color:  red !important;
+}
+table td{ white-space: normal !important;}
+.table-striped tr{ border: 1px solid #E5E5E5 !important;}
+
+.action-buttons{
+    text-align:  center;
+}
+.ui-widget-header{
+    background-color: #ffffff;
+    border: 0px;
+     border-top:  1px solid #E5E5E5;
+  
+    padding-top: 20px;
+}
+.ui-datatable-data{ border: 0px;}
+table th.ui-state-active{ color: #307ECC !important;}
+table th.ui-state-hover{ box-shadow: none !important; 
+                -webkit-box-shadow: none !important; 
+                background-image: none !important; }
+
+.form-actions{
+    padding-left: 5px !important;
+    padding: 10px 5px ;
+    text-align: center;
+}
+.action-buttons{white-space: nowrap !important;}
+.action-buttons a{padding: 3px !important; }
+.ui-dialog{
+  /*  position: inherit;
+    top: 10%;
+    left: 50%;*/
+margin-left: auto; margin-right: auto;
+}
+th input{ line-height: 10px !important;
+width: 80%!important;}
+
+
+.ui-messages-info{
+   /* color: #2F7534 !important;
+    background-color: #A7E56D !important;
+    border-color: #A7E56D !important;
+    font-weight: bold !important;*/
+   
+    color: #468847 !important;
+    background-color: #dff0d8 !important;
+    border-color: #d6e9c6 !important;
+}
+.navbar .navbar-inner{
+    background: #eee url('#{request.contextPath}/resources/images/clinic-banner-LTR.png');
+    background-size: 100% 100%;
+}
+.navbar .navbar-inner-ltr{
+    background: #eee url('#{request.contextPath}/resources/images/clinic-banner-RTL.png');
+    background-size: 100% 100%;
+}
+.breadcrumbs{
+    background:/*#375283*/ /*#565663*/ /*#d15b47*/ /*#DFDFDF*/ #8f8686;
+  border: 0px;
+  border-top:  1px solid #565663;
+  border-bottom:   1px solid #ccc;
+}
+
+
+.breadcrumbs li{
+    text-shadow: none;
+}
+/*.breadcrumbs li a{
+    
+    color: #ccc;
+}
+
+
+
+.breadcrumbs li.active{
+    color: #fff;
+}*/
+
+.page-content .page-header:first-child{
+    border: 1px solid #eee;
+    background: #8f8686 ;
+    padding: 2px;
+    border-radius: 5px;
+    
+    
+}
+.page-content .page-header:first-child h1 {
+    font-weight: bold;
+    color: #fff;
+    font-size: 16pt;
+    
+}
+
+.ui-button{
+     border-radius: 2px;
+     min-width: 110px;
+     min-height: 35px;
+     font-weight: bold;
+     font-family: tahoma !important;
+}
+.control-label{
+    color: #999;
+    /*font-weight: bold;*/
+}
+.bigger-200 {
+font-size: 170%;
+}
+a:hover{
+    text-decoration:  none !important;
+}

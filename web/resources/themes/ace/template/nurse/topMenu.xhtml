@@ -1,0 +1,109 @@
+<h:form xmlns="http://www.w3.org/1999/xhtml" style="margin: 0px;"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui"> 
+
+    <div class="navbar">
+
+        <div class="#{localeBean.dirction == 'RTL'?'navbar-inner':'navbar-inner-ltr'}">
+            <div class="container-fluid">
+                <a href="#" class="brand">
+                    <div align="#{localeBean.align}"> <h:graphicImage style="width: 50%;" url="/resources/images/KClinicLogo.png"/> </div>
+
+
+                    <small style="font-size: 11pt; color: green;"> #{commonMSG.kclinik}</small>
+
+
+                </a>
+
+                <div style="float: #{localeBean.invAlign};color: #777;padding-top: 80px;">
+
+                    <small style="color:#2b2b2b;font-weight: bold;font-size: large;">#{commonMSG.welcome},</small>
+                    #{loginModelView.loginedUser.userFullName}
+                    <br/>
+
+                    <!--***********************************language btns********************************-->
+
+                    <h:panelGroup rendered="#{localeBean.dirction=='LTR'}">
+                        <p:commandLink action="#{localeBean.arabicAction}" title="#{commonMSG.arabLang}"  styleClass="btn btn-small btn-info">
+                            <i class="icon-globe"></i>
+                        </p:commandLink>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{localeBean.dirction=='RTL'}">
+                        <p:commandLink   action="#{localeBean.englishAction()}" title="#{commonMSG.englishLang}" styleClass="btn btn-small btn-info">
+                            <i class="icon-globe"></i>
+                        </p:commandLink>
+                    </h:panelGroup>
+                    <p:spacer width="5"/>
+
+                    <!--************************************changePassword**********************************-->
+
+<!--                    <a title="{commonMSG.changepass}" href="{request.contextPath}/secure/adminstration/changePassword.xhtml" class="btn btn-small btn-info">
+                        <i class="icon-key"></i> 
+                    </a>-->
+
+                    <!--                    <p:commandLink action="{loginModelView.changepass()}" oncomplete="changePasswordDlg.show();" process="passwordChangeAction" id="passwordChangeAction" styleClass="btn btn-small btn-info" >
+                                            <i class="icon-key"></i> 
+                                        </p:commandLink>-->
+
+                    <p:spacer width="5"/>
+                    <p:commandLink action="#{loginModelView.logout()}"  styleClass="btn btn-small btn-info" >
+                        <i class="icon-off"></i>
+                        #{commonMSG.logout}
+                    </p:commandLink>
+                </div>   
+
+                <!--/.ace-nav-->
+            </div><!--/.container-fluid-->
+        </div><!--/.navbar-inner-->
+
+    </div>
+    <p:dialog id="changePasswordDialog" closable="true"  modal="true" draggable="false" resizable="false" widgetVar="changePasswordDlg" header="#{ChangePasswordMSG.changePass}" >
+        <h:form id="passwordsdata" styleClass="form-horizontal">
+            <p:messages id="message" showDetail="true"  globalOnly="true" /> 
+            <fieldset>
+                <div class="form-actions">
+                    <div class="control-group">
+                        <h:outputLabel styleClass="control-label" value="#{ChangePasswordMSG.currentPass}:"/>
+                        <div class="controls">
+                            <p:password id="currentPass" value="#{changePassBean.currentPass}" />
+                            <span class="help-inline">
+                                <p:message for="currentPass"/>
+                            </span>
+                        </div>    
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel styleClass="control-label" value="#{ChangePasswordMSG.newPass}:"/>
+                        <div class="controls">
+                            <p:password id="newPass" value="#{changePassBean.newPass}" />
+                            <span class="help-inline">
+                                <p:message for="newPass"/>
+                            </span>
+                        </div>    
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel styleClass="control-label" value="#{ChangePasswordMSG.confirmNewPass}:"/>
+                        <div class="controls">
+                            <p:password id="confirmNewPass" value="#{changePassBean.newConfirmPass}" />
+                            <span class="help-inline">
+                                <p:message for="confirmNewPass"/>
+                            </span>
+                        </div>    
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <div align="center">
+                        <p:commandButton value="#{commonMSG.update}" id="saveTop" styleClass="btn btn-info span4"  action="#{changePassBean.updatePass}" update="passwordsdata"  />
+                        <p:commandButton  styleClass="btn btn-info span4"  oncomplete="changePasswordDlg.hide();"  value="#{commonMSG.close}" title="#{commonMSG.close}"    >
+
+                        </p:commandButton>   
+                    </div>
+
+                </div>
+            </fieldset>
+        </h:form>
+    </p:dialog>
+</h:form>

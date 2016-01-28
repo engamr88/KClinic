@@ -1,0 +1,391 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../resources/themes/ace/template/template_noTable.xhtml">
+
+    <ui:define name="content">
+        <div class="page-header position-relative">
+            <h1>
+                #{doseMSG.prescriptionData}
+            </h1>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <ui:include src="../include/RequiredFields.xhtml"/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <f:event type="preRenderView" listener="#{loginModelView.redirectForViewForms('coreSettings', 'prescriptionData')}" />
+                <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+                    <p:messages id="messages" showDetail="true"  autoUpdate="true" closable="true" globalOnly="true"/> 
+                    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="active">
+                                <a data-toggle="tab" href="#dose">
+                                    <!--<i class="green icon-home bigger-110"></i>-->
+                                    #{doseMSG.title}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab" href="#medication">
+                                    #{medicationMSG.title}
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab"  href="#medicationForm">
+                                    #{formMSG.title}
+
+                                </a>
+                            </li>
+
+                            <li>
+                                <a data-toggle="tab"  href="#concentration">
+                                    #{concentrationMSG.title}
+
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div id="dose" class="tab-pane in active">
+                                <h:panelGroup id="doseGroup">
+                                    <div class="control-group">
+                                        <h:outputLabel value="#{doseMSG.doseName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                                        <div class="controls">
+                                            <h:inputText id="doseName" value="#{prescriptionDataView.doseName}" styleClass="name-input"/>
+                                            <span class="help-inline">
+                                                <p:message for="doseName"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <p:commandButton  label="save"  rendered="#{!prescriptionDataView.updateDoseFlag}"  
+                                                          styleClass="btn   btn-success no-border"  
+                                                          action="#{prescriptionDataView.saveObject(1)}" 
+                                                          value="#{commonMSG.save}" 
+                                                          title="#{commonMSG.save}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          update="doseGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"/>
+
+                                        <p:commandButton  styleClass="btn   btn-success no-border"   
+                                                          rendered="#{prescriptionDataView.updateDoseFlag}" 
+                                                          value="#{commonMSG.update}" 
+                                                          title="#{commonMSG.update}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          action="#{prescriptionDataView.updateObject(1)}"  
+                                                          update="doseGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"
+                                                          />
+
+                                        <p:commandButton immediate="true" styleClass="btn no-border" 
+                                                         value="#{commonMSG.clear}" 
+                                                         title="#{commonMSG.clear}" 
+                                                         oncomplete="backToTop();return false;" 
+                                                         action="#{prescriptionDataView.clearDataForm()}" 
+                                                         process="clearDoseBtn" 
+                                                         id="clearDoseBtn" update="doseGroup"/>
+                                    </div>
+                                    <p:dataTable var="dose"   value="#{prescriptionDataView.doseList}" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                                                 paginatorPosition="bottom"  rowKey="#{dose.doseId}"  emptyMessage="#{commonMSG.noRec}"
+                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                 rowsPerPageTemplate="5,10,20,50,100,200,300"  id="tableDoseID" lazy="true">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{doseMSG.id}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{dose.doseId}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{doseMSG.doseName}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{dose.doseName}"/>
+                                        </p:column>
+
+                                        <p:column exportable="false" styleClass="td-actions" >
+                                            <div class="action-buttons">
+
+                                                <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  oncomplete="backToTop();"  update=":form" action="#{prescriptionDataView.loadObject(1, dose)}">
+                                                    <i class="icon-pencil bigger-130" />
+                                                </p:commandLink>
+
+
+                                                <p:commandLink action="#{prescriptionDataView.prepareObjectToDelete(dose,1)}" update=":form:deleteDlg" title="#{commonMSG.delete}" styleClass="red">
+                                                    <i class="icon-trash bigger-130" />
+                                                </p:commandLink>
+                                            </div>   
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </div>
+
+                            <div id="medication" class="tab-pane">
+                                <h:panelGroup id="medicationGroup">
+                                    <div class="control-group">
+                                        <h:outputLabel value="#{medicationMSG.medicationName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                                        <div class="controls">
+                                            <h:inputText id="medicationName" value="#{prescriptionDataView.medicationName}" styleClass="name-input"/>
+                                            <span class="help-inline">
+                                                <p:message for="medicationName"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <p:commandButton  label="save"  rendered="#{!prescriptionDataView.updateMedicationFlag}"  
+                                                          styleClass="btn   btn-success no-border"  
+                                                          action="#{prescriptionDataView.saveObject(2)}" 
+                                                          value="#{commonMSG.save}" 
+                                                          title="#{commonMSG.save}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          update="medicationGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"/>
+
+                                        <p:commandButton  styleClass="btn   btn-success no-border"   
+                                                          rendered="#{prescriptionDataView.updateMedicationFlag}" 
+                                                          value="#{commonMSG.update}" 
+                                                          title="#{commonMSG.update}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          action="#{prescriptionDataView.updateObject(2)}"  
+                                                          update="medicationGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"
+                                                          />
+
+                                        <p:commandButton immediate="true" styleClass="btn no-border" 
+                                                         value="#{commonMSG.clear}" 
+                                                         title="#{commonMSG.clear}" 
+                                                         oncomplete="backToTop();return false;" 
+                                                         action="#{prescriptionDataView.clearDataForm()}" 
+                                                         process="clearmedicationBtn" 
+                                                         id="clearmedicationBtn" update="medicationGroup"/>
+                                    </div>
+                                    <p:dataTable var="medication"   value="#{prescriptionDataView.medicationList}" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                                                 paginatorPosition="bottom"  rowKey="#{medication.medicationId}"  emptyMessage="#{commonMSG.noRec}"
+                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                 rowsPerPageTemplate="5,10,20,50,100,200,300"  id="tableMedicationID" lazy="true">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{medicationMSG.id}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{medication.medicationId}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{medicationMSG.medicationName}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{medication.medicationName}"/>
+                                        </p:column>
+                                        
+                                         <p:column exportable="false" styleClass="td-actions" >
+                                            <div class="action-buttons">
+
+                                                <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  oncomplete="backToTop();"  update=":form" action="#{prescriptionDataView.loadObject(2, medication)}">
+                                                    <i class="icon-pencil bigger-130" />
+                                                </p:commandLink>
+
+
+                                                <p:commandLink action="#{prescriptionDataView.prepareObjectToDelete(medication,2)}" update=":form:deleteDlg" title="#{commonMSG.delete}" styleClass="red">
+                                                    <i class="icon-trash bigger-130" />
+                                                </p:commandLink>
+                                            </div>   
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </div>
+
+                            <div id="medicationForm" class="tab-pane">
+                                <h:panelGroup id="medicationFormGroup">
+                                    <div class="control-group">
+                                        <h:outputLabel value="#{formMSG.formName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                                        <div class="controls">
+                                            <h:inputText id="formName" value="#{prescriptionDataView.formName}" styleClass="name-input"/>
+                                            <span class="help-inline">
+                                                <p:message for="formName"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <p:commandButton  label="save"  rendered="#{!prescriptionDataView.updateFormFlag}"  
+                                                          styleClass="btn   btn-success no-border"  
+                                                          action="#{prescriptionDataView.saveObject(3)}" 
+                                                          value="#{commonMSG.save}" 
+                                                          title="#{commonMSG.save}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          update="medicationFormGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"/>
+
+                                        <p:commandButton  styleClass="btn   btn-success no-border"   
+                                                          rendered="#{prescriptionDataView.updateFormFlag}" 
+                                                          value="#{commonMSG.update}" 
+                                                          title="#{commonMSG.update}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          action="#{prescriptionDataView.updateObject(3)}"  
+                                                          update="medicationFormGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"
+                                                          />
+
+                                        <p:commandButton immediate="true" styleClass="btn no-border" 
+                                                         value="#{commonMSG.clear}" 
+                                                         title="#{commonMSG.clear}" 
+                                                         oncomplete="backToTop();return false;" 
+                                                         action="#{prescriptionDataView.clearDataForm()}" 
+                                                         process="clearformBtn" 
+                                                         id="clearformBtn" update="medicationFormGroup"/>
+                                    </div>
+                                    <p:dataTable var="form"   value="#{prescriptionDataView.formList}" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                                                 paginatorPosition="bottom"  rowKey="#{form.formId}"  emptyMessage="#{commonMSG.noRec}"
+                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                 rowsPerPageTemplate="5,10,20,50,100,200,300"  id="tableFormID" lazy="true">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{formMSG.id}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{form.formId}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{formMSG.formName}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{form.formName}"/>
+                                        </p:column>
+                                         <p:column exportable="false" styleClass="td-actions" >
+                                            <div class="action-buttons">
+
+                                                <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  oncomplete="backToTop();"  update=":form" action="#{prescriptionDataView.loadObject(3, form)}">
+                                                    <i class="icon-pencil bigger-130" />
+                                                </p:commandLink>
+
+
+                                                <p:commandLink action="#{prescriptionDataView.prepareObjectToDelete(form,3)}" update=":form:deleteDlg" title="#{commonMSG.delete}" styleClass="red">
+                                                    <i class="icon-trash bigger-130" />
+                                                </p:commandLink>
+                                            </div>   
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </div>
+
+                            <div id="concentration" class="tab-pane">
+                                <h:panelGroup id="concentrationGroup">
+                                    <div class="control-group">
+                                        <h:outputLabel value="#{concentrationMSG.ConcentrationName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                                        <div class="controls">
+                                            <h:inputText id="concentrationName" value="#{prescriptionDataView.concentrationName}" styleClass="name-input"/>
+                                            <span class="help-inline">
+                                                <p:message for="concentrationName"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <p:commandButton  label="save"  rendered="#{!prescriptionDataView.updateConcentrationFlag}"  
+                                                          styleClass="btn   btn-success no-border"  
+                                                          action="#{prescriptionDataView.saveObject(4)}" 
+                                                          value="#{commonMSG.save}" 
+                                                          title="#{commonMSG.save}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          update="concentrationGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"/>
+
+                                        <p:commandButton  styleClass="btn   btn-success no-border"   
+                                                          rendered="#{prescriptionDataView.updateConcentrationFlag}" 
+                                                          value="#{commonMSG.update}" 
+                                                          title="#{commonMSG.update}" 
+                                                          oncomplete="backToTop();return false;"
+                                                          action="#{prescriptionDataView.updateObject(4)}"  
+                                                          update="concentrationGroup,messages"
+                                                          ajax="#{navigator.currentView.ajaxStatus}"
+                                                          />
+
+                                        <p:commandButton immediate="true" styleClass="btn no-border" 
+                                                         value="#{commonMSG.clear}" 
+                                                         title="#{commonMSG.clear}" 
+                                                         oncomplete="backToTop();return false;" 
+                                                         action="#{prescriptionDataView.clearDataForm()}" 
+                                                         process="clearconcentrationBtn" 
+                                                         id="clearconcentrationBtn" update="concentrationGroup"/>
+                                    </div>
+                                    <p:dataTable var="concentration"   value="#{prescriptionDataView.concentrationList}" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                                                 paginatorPosition="bottom"  rowKey="#{concentration.concentrationId}"  emptyMessage="#{commonMSG.noRec}"
+                                                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                                                 rowsPerPageTemplate="5,10,20,50,100,200,300"  id="tableConcentrationID" lazy="true">
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{concentrationMSG.id}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{concentration.concentrationId}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <f:facet name="header">
+                                                <h:outputLabel value="#{concentrationMSG.ConcentrationName}"/>
+                                            </f:facet>
+                                            <h:outputLabel value="#{concentration.concentrationName}"/>
+                                        </p:column>
+                                         <p:column exportable="false" styleClass="td-actions" >
+                                            <div class="action-buttons">
+
+                                                <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  oncomplete="backToTop();"  update=":form" action="#{prescriptionDataView.loadObject(4, concentration)}">
+                                                    <i class="icon-pencil bigger-130" />
+                                                </p:commandLink>
+
+
+                                                <p:commandLink action="#{prescriptionDataView.prepareObjectToDelete(concentration,4)}" update=":form:deleteDlg" title="#{commonMSG.delete}" styleClass="red">
+                                                    <i class="icon-trash bigger-130" />
+                                                </p:commandLink>
+                                            </div>   
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </div>
+                        </div>
+                    </div>
+                    <h:panelGroup id="deleteDlg">
+                        <p:dialog closable="false"  modal="true" draggable="false" resizable="false" widgetVar="confirmation" header="#{commonMSG.deleteConfirm}" >
+
+                            <p:panelGrid columns="2">
+                                <h:graphicImage id="image"
+                                                alt="jsf-sun"
+                                                url="/resources/images/trashIcon.png">
+                                </h:graphicImage> 
+
+                                <h:outputLabel value="#{commonMSG.deleteMSG}" style="font-weight: bolder"/>
+                            </p:panelGrid>
+                            <f:facet name="footer">
+                                <p:panelGrid columns="2">
+                                    <h:panelGroup rendered="#{prescriptionDataView.deleteTypeFlag==1}">
+                                        <p:commandButton style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{prescriptionDataView.deleteObject(1)}" update="doseGroup" 
+                                                         oncomplete="PF('confirmation').hide();"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{prescriptionDataView.deleteTypeFlag==2}">
+                                        <p:commandButton style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{prescriptionDataView.deleteObject(2)}" update="medicationGroup" 
+                                                         oncomplete="PF('confirmation').hide();"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{prescriptionDataView.deleteTypeFlag==3}">
+                                        <p:commandButton style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{prescriptionDataView.deleteObject(3)}" update="medicationFormGroup" 
+                                                         oncomplete="PF('confirmation').hide();"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{prescriptionDataView.deleteTypeFlag==4}">
+                                        <p:commandButton style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{prescriptionDataView.deleteObject(4)}" update="concentrationGroup" 
+                                                         oncomplete="PF('confirmation').hide();"/>
+                                    </h:panelGroup>
+                                    <p:commandButton style="color: red" value="#{commonMSG.no}" title="#{commonMSG.no}" oncomplete="PF('confirmation').hide();" actionListener="#{prescriptionDataView.clearDataForm()}"/>
+                                </p:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

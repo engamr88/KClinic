@@ -1,0 +1,108 @@
+<div    xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+    
+  
+
+    <p:dialog closable="false" dynamic="true" id="lookup-dlg"  modal="true" draggable="false" resizable="false"  widgetVar="lookupDlg" 
+              header="#{navigator.currentView.lookUpView.viewTtile}" >
+        
+        <div class="slim-scroll" data-height="125">
+      <h:form id="lookup-form" styleClass="form-horizontal">
+            <p:messages id="messages"  showDetail="true" globalOnly="true"  autoUpdate="true" closable="false" >
+                <p:effect type="blind" event="load" delay="2000" > 
+                     <f:param name="direction" value="'vertical'" />  
+                </p:effect>   
+            </p:messages>    
+
+          <ui:include src="#{navigator.currentView.lookUpView.lookUpformPath}"/>
+            
+
+            <div class="form-actions" >
+
+
+
+                <p:commandButton  label="save" rendered="#{!navigator.currentView.lookUpView.updateMode}"  
+                                  styleClass="btn btn-info" 
+                                  action="#{navigator.currentView.lookUpView.save()}" 
+                                  value="#{commonMSG.save}" 
+                                  title="#{commonMSG.save}" 
+                                  oncomplete="backToTop();return false;"
+                                  update=":lookup-form,:lookup-datatable-form"
+                                  />
+
+                <p:commandButton styleClass="btn btn-primary" 
+                                 rendered="#{navigator.currentView.lookUpView.updateMode}" 
+                                 value="#{commonMSG.update}" 
+                                 title="#{commonMSG.update}" 
+                                 oncomplete="backToTop();return false;"
+                                 action="#{navigator.currentView.lookUpView.update()}"  
+                                 update=":lookup-form,:lookup-datatable-form"
+
+                                 />
+                <p:commandButton immediate="true" styleClass="btn" 
+                                 value="#{commonMSG.clear}" 
+                                 title="#{commonMSG.clear}" 
+                                 oncomplete="backToTop();return false;" 
+                                 action="#{navigator.currentView.lookUpView.clear()}" 
+                                 process="clearBtn" 
+                                 id="clearBtn" update=":lookup-form,:lookup-datatable-form"/>
+            </div>
+      </h:form>
+            
+            
+            <h:form id="lookup-datatable-form" >
+             <p:dataTable var="row"   value="#{navigator.currentView.lookUpView.lazyModel}" paginator="true" rows="6" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                 paginatorPosition="bottom"  rowKey="#{row.id}" 
+                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5" selectionMode="single"  id="tableID" lazy="true">
+
+
+
+        <p:columns value="#{navigator.currentView.lookUpView.columns}" styleClass="#{column.style}" width="#{column.width}%" var="column" columnIndexVar="colIndex" 
+                   sortBy="#{column.property}" filterBy="#{column.property}">
+            <f:facet name="header">
+                #{column.header}
+            </f:facet>
+
+            #{row[column.property]}
+
+        </p:columns>
+
+
+        <p:column exportable="false" styleClass="td-actions" >
+            <div class="action-buttons">
+
+                <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  update=":lookup-form" action="#{navigator.currentView.lookUpView.rowSelected}">
+                    <i class="icon-pencil bigger-130" />
+                    <f:setPropertyActionListener value="#{row}" target="#{navigator.currentView.lookUpView.DAO.modelWrapper}"/>
+                </p:commandLink>
+
+                <p:commandLink title="#{commonMSG.delete}"  styleClass="red" action="#{navigator.currentView.lookUpView.delete()}" process="deleteBtn" id="deleteBtn" update=":lookup-datatable-form,:lookup-form" >
+                    <i class="icon-trash bigger-130" />
+                    <f:setPropertyActionListener value="#{row}" target="#{navigator.currentView.lookUpView.DAO.modelWrapper}"/>
+<!--                    <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" /> -->
+                </p:commandLink>
+            </div>   
+        </p:column>
+    </p:dataTable>
+                
+                
+             <div align="center" >
+                 <p:commandLink styleClass="ui-corner-all btn btn-success no-border" style="width: 30%" update=":form:#{navigator.currentView.lookfromTitle}"  value="Finish" title="Finsih" oncomplete="lookupDlg.hide();" action="#{navigator.currentView.updateLookUp()}"/>
+             </div>
+            </h:form>  
+       
+            
+       </div>     
+      
+    </p:dialog>
+     <p:confirmDialog global="true" >
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/> 	
+    </p:confirmDialog>
+    
+    
+</div>

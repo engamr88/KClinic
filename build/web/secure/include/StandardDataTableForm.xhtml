@@ -1,0 +1,72 @@
+<h:panelGroup xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui" rendered="#{navigator.currentView.datableVisiable}"> 
+
+    <h:form id="table-form">
+
+
+        <ui:include src="DatatableMainFunctions.xhtml"/>  
+
+        <p:dataTable var="row"   value="#{navigator.currentView.lazyModel}" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                     paginatorPosition="bottom"  rowKey="#{row.id}"  emptyMessage="#{commonMSG.noRec}"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,20,50,100,200,300"  id="tableID" lazy="true">
+
+
+            <p:columns value="#{navigator.currentView.columns}" styleClass="#{column.style}" width="#{column.width}%" var="column" columnIndexVar="colIndex" 
+                       sortBy="#{column.property}" filterBy="#{column.property}">
+
+                <f:facet name="header">
+                    <h:outputText value=" #{column.header}" escape="false"/>
+                </f:facet>
+
+                <h:outputText value="#{row[column.property]}" escape="false"/>
+
+            </p:columns>
+
+
+            <p:column exportable="false" styleClass="td-actions" >
+                <div class="action-buttons">
+
+                    <p:commandLink styleClass="blue" title="#{commonMSG.edit}"  oncomplete="backToTop();"  update=":form" action="#{navigator.currentView.rowSelected}">
+                        <i class="icon-pencil bigger-130" />
+                        <f:setPropertyActionListener value="#{row}" target="#{navigator.currentView.DAO.modelWrapper}"/>
+                    </p:commandLink>
+
+                    <!--                <p:commandLink styleClass="green" title="{commonMSG.copy}" rendered="{loginModelView.roleList[navigator.currentView.FORM_NAME_KEY.concat(':SAVE')]}" oncomplete="backToTop();"  update=":form" action="{navigator.currentView.copyRecord}">
+                                        <i class="icon-copy bigger-130" />
+                                        <f:setPropertyActionListener value="{row}" target="{navigator.currentView.DAO.modelWrapper}"/>
+                                    </p:commandLink>-->
+
+
+                    <p:commandLink title="#{commonMSG.delete}" styleClass="red" onclick="PF('confirmation').show();" >
+                        <i class="icon-trash bigger-130" />
+                        <f:setPropertyActionListener value="#{row}" target="#{navigator.currentView.DAO.modelWrapper}"/>
+                    </p:commandLink>
+                </div>   
+            </p:column>
+        </p:dataTable>
+
+        <p:dialog closable="false"  modal="true" draggable="false" resizable="false" widgetVar="confirmation" header="#{commonMSG.deleteConfirm}" >
+            <p:panelGrid columns="2">
+                <h:graphicImage id="image"
+                                alt="jsf-sun"
+                                url="/resources/images/trashIcon.png">
+                </h:graphicImage> 
+
+                <h:outputLabel value="#{commonMSG.deleteMSG}" style="font-weight: bolder"/>
+
+            </p:panelGrid>
+            <f:facet name="footer">
+                <p:panelGrid columns="2">
+                    <p:commandButton style="color: green" value="#{commonMSG.yes}" title="#{commonMSG.yes}" action="#{navigator.currentView.delete()}" update="table-form,:form" 
+                                     oncomplete="PF('confirmation').hide();"/>
+                    <p:commandButton style="color: red" value="#{commonMSG.no}" title="#{commonMSG.no}" oncomplete="PF('confirmation').hide();" actionListener="#{navigator.currentView.clear()}"/>
+                </p:panelGrid>
+            </f:facet>
+        </p:dialog>
+
+    </h:form>
+</h:panelGroup>    

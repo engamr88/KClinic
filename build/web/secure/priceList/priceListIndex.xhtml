@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../resources/themes/ace/template/template.xhtml">
+
+    <ui:define name="content">
+        <div class="page-header position-relative">
+            <h1>
+                #{priceListView.viewTtile}
+            </h1>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <ui:include src="../include/RequiredFields.xhtml"/>
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="span12">
+                <f:event type="preRenderView" listener="#{loginModelView.redirectForViewForms('coreSettings', 'priceList')}" />
+                <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+                    <p:messages id="messages" showDetail="true"  autoUpdate="true" closable="true" globalOnly="true"/> 
+                    <div class="control-group">
+                        <h:outputLabel  value="#{questMSG.slcCategory}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:selectOneMenu id="category" value="#{priceListView.categoryId}">
+                                <f:selectItem itemLabel="#{questMSG.slcCategory}" itemValue="-1"/>
+                                <f:selectItems value="#{priceListView.categoryList}" var="cat" itemLabel="#{cat.categoryTitle}" itemValue="#{cat.id}"/>
+                            </h:selectOneMenu>
+                            <span class="help-inline">
+                                <p:message for="category"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <h:outputLabel  value="#{priceListMSG.priceType}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:inputText id="priceType" value="#{priceListView.DAO.modelWrapper.model.priceType}" required="true" requiredMessage="#{priceListMSG.priceTypeReq}"/>
+                            <span class="help-inline">
+                                <p:message for="priceType"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel  value="#{priceListMSG.priceAmount}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:inputText id="priceAmount" value="#{priceListView.DAO.modelWrapper.model.priceAmount}" required="true" requiredMessage="#{priceListMSG.priceTypeReq}"/>
+                            <span class="help-inline">
+                                <p:message for="priceAmount"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <ui:include src="../include/CommonActions.xhtml" />
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

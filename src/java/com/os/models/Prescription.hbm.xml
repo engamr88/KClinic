@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.Prescription" table="prescription" catalog="kclinic" optimistic-lock="version">
+        <id name="prescriptionId" type="java.lang.Integer">
+            <column name="prescription_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="concentration" class="com.os.models.Concentration" fetch="select">
+            <column name="concentration_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="detection" class="com.os.models.Detection" fetch="select">
+            <column name="detection_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="dose" class="com.os.models.Dose" fetch="select">
+            <column name="dose_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="form" class="com.os.models.Form" fetch="select">
+            <column name="form_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="medication" class="com.os.models.Medication" fetch="select">
+            <column name="medication_id" not-null="true" />
+        </many-to-one>
+        <property name="prescriptionDate" type="timestamp">
+            <column name="prescription_date" length="19" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

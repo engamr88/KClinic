@@ -1,0 +1,63 @@
+<div class="alert alert-info" 
+     xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui">
+
+    <table width="100%">
+        <tr> <td>
+                <h:panelGrid columns="4">
+                    <div class="hidden-phone">
+                        <font style="color: #888">#{commonMSG.export}: </font>
+                    </div>
+                    <h:commandLink  >  
+                        <h:panelGrid columns="2">
+                            <p:graphicImage value="/resources/images/excel.png" />
+                            <div class="hidden-phone">
+                                <font style="color: #3EA709">xls </font>
+                            </div>
+                        </h:panelGrid>
+                        <p:dataExporter type="xls" target="tableID" fileName="excelSheet" pageOnly="true" encoding="windows-1256"/>  
+                    </h:commandLink>  
+
+                    <h:commandLink >  
+                        <h:panelGrid columns="2">
+                            <p:graphicImage value="/resources/images/pdf.png" />  
+                            <div class="hidden-phone">
+                                <font style="color: #C9250F">pdf </font> 
+                            </div>
+                        </h:panelGrid>
+                        <p:dataExporter type="pdf" target="tableID" fileName="pdfSheet" pageOnly="true" encoding="windows-1256"/>  
+
+                    </h:commandLink>  
+
+                    <h:commandLink >  
+                        <h:panelGrid columns="2">
+                            <p:graphicImage value="/resources/images/text.png" />  
+                            <div class="hidden-phone">
+                                <font style="color: #664425">cvs </font> 
+                            </div>
+                        </h:panelGrid>
+                        <p:dataExporter type="csv" target="tableID" fileName="csvSheet" pageOnly="true" encoding="windows-1256"/>  
+                    </h:commandLink>
+
+                </h:panelGrid>
+
+            </td>
+            <td align='#{localeBean.invAlign}'>
+                <h:commandLink styleClass="blue" title="#{commonMSG.Print}">  
+                    <h:panelGrid columns="2">
+                        <i class="icon-print bigger-150"></i>
+                        <div class="hidden-phone">
+                            <h:outputLabel value="#{commonMSG.Print}"/>
+                        </div>
+                    </h:panelGrid>
+                    <p:printer target="tableID" />  
+                </h:commandLink>
+
+            </td> </tr>
+    </table>
+
+
+</div>  

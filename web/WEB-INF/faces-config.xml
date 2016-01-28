@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.1"
+              xmlns="http://java.sun.com/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
+
+    <application>
+
+        <resource-bundle>
+            <base-name>com.os.ks.work.user.messages.User</base-name>
+            <var>userMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.user.messages.Employee</base-name>
+            <var>employeeMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.changePassword.messages.ChangePassword</base-name>
+            <var>changePasswordMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.common.messages.Common</base-name>
+            <var>commonMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.common.messages.MenuMessages</base-name>
+            <var>menuMSG</var>
+        </resource-bundle>
+        
+         <resource-bundle>
+            <base-name>com.os.ks.work.doctor.messages.Doctor</base-name>
+            <var>doctorMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.patient.messages.Patient</base-name>
+            <var>patientMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.caseStudy.messages.CaseStudy</base-name>
+            <var>caseStudyMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.category.messages.Category</base-name>
+            <var>categoryMSG</var>
+        </resource-bundle>
+       
+        <resource-bundle>
+            <base-name>com.os.ks.work.detection.messages.Detection</base-name>
+            <var>detectionMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.dose.messages.Dose</base-name>
+            <var>doseMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.dose.messages.Form</base-name>
+            <var>formMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.dose.messages.Concentration</base-name>
+            <var>concentrationMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.medication.messages.Medication</base-name>
+            <var>medicationMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.prescription.messages.Prescription</base-name>
+            <var>prescriptionMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.quest.messages.Quest</base-name>
+            <var>questMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.questAnswer.messages.QuestAnswer</base-name>
+            <var>questAnswerMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.reservation.messages.Reservation</base-name>
+            <var>reservationMSG</var>
+        </resource-bundle>
+        
+        <resource-bundle>
+            <base-name>com.os.ks.work.priceList.messages.PriceList</base-name>
+            <var>priceListMSG</var>
+        </resource-bundle>
+        
+         <resource-bundle>
+            <base-name>com.os.ks.work.session.messages.Session</base-name>
+            <var>sessionMSG</var>
+        </resource-bundle>
+       
+    </application>
+</faces-config>

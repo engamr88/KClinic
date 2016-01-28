@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.Quest" table="quest" catalog="kclinic" optimistic-lock="version">
+        <id name="questId" type="java.lang.Integer">
+            <column name="quest_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="category" class="com.os.models.Category" fetch="select">
+            <column name="category_id" not-null="true" />
+        </many-to-one>
+        <property name="questName" type="string">
+            <column name="quest_name" length="65535" not-null="true" />
+        </property>
+        <property name="questType" type="java.lang.Integer">
+            <column name="quest_type" not-null="true" />
+        </property>
+        <set name="questAnswers" table="quest_answer" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="quest_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.QuestAnswer" />
+        </set>
+    </class>
+</hibernate-mapping>

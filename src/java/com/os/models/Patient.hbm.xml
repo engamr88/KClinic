@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.Patient" table="patient" catalog="kclinic" optimistic-lock="version">
+        <id name="patientId" type="java.lang.Integer">
+            <column name="patient_id" />
+            <generator class="identity" />
+        </id>
+        <property name="patientFullName" type="string">
+            <column name="patient_full_name" length="200" not-null="true" />
+        </property>
+        <property name="patientMobile" type="string">
+            <column name="patient_mobile" length="20" not-null="true" />
+        </property>
+        <property name="patientPhone" type="string">
+            <column name="patient_phone" length="20" />
+        </property>
+        <property name="patientAddress" type="string">
+            <column name="patient_address" length="500" />
+        </property>
+        <property name="patientEmail" type="string">
+            <column name="patient_email" length="200" />
+        </property>
+        <property name="patientGender" type="java.lang.Integer">
+            <column name="patient_gender" />
+        </property>
+        <property name="patientNationalNumber" type="java.lang.Integer">
+            <column name="patient_national_number" />
+        </property>
+        <property name="patientBirthdate" type="date">
+            <column name="patient_birthdate" length="10" />
+        </property>
+        <property name="patientJob" type="string">
+            <column name="patient_job" length="500" />
+        </property>
+        <set name="detections" table="detection" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="patient_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.Detection" />
+        </set>
+        <set name="reservations" table="reservation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="patient_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.Reservation" />
+        </set>
+        <set name="questAnswers" table="quest_answer" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="patient_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.QuestAnswer" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.User" table="user" catalog="kclinic" optimistic-lock="version">
+        <id name="userId" type="java.lang.Integer">
+            <column name="user_id" />
+            <generator class="identity" />
+        </id>
+        <property name="userName" type="string">
+            <column name="user_name" length="100" not-null="true" />
+        </property>
+        <property name="userPassword" type="string">
+            <column name="user_password" length="100" not-null="true" />
+        </property>
+        <property name="userType" type="int">
+            <column name="user_type" not-null="true" />
+        </property>
+        <property name="userFullName" type="string">
+            <column name="user_full_name" length="200" not-null="true" />
+        </property>
+        <property name="userMobile" type="string">
+            <column name="user_mobile" length="20" not-null="true" />
+        </property>
+        <property name="userPhone" type="string">
+            <column name="user_phone" length="20" />
+        </property>
+        <property name="userAddress" type="string">
+            <column name="user_address" length="500" />
+        </property>
+        <property name="userEmail" type="string">
+            <column name="user_email" length="200" />
+        </property>
+        <property name="userGender" type="java.lang.Integer">
+            <column name="user_gender" />
+        </property>
+        <property name="userNationalNumber" type="java.lang.Integer">
+            <column name="user_national_number" />
+        </property>
+        <property name="userBirthdate" type="date">
+            <column name="user_birthdate" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

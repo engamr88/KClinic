@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Jan 12, 2016 5:08:19 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.os.models.Detection" table="detection" catalog="kclinic" optimistic-lock="version">
+        <id name="detectionId" type="java.lang.Integer">
+            <column name="detection_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="patient" class="com.os.models.Patient" fetch="select">
+            <column name="patient_id" not-null="true" />
+        </many-to-one>
+        <property name="note" type="string">
+            <column name="note" length="65535" />
+        </property>
+        <property name="extraFees" type="java.lang.Double">
+            <column name="extra_fees" precision="10" />
+        </property>
+        <property name="archive">
+            <column name="archive" not-null="true" />
+        </property>
+        <property name="archiveDate" type="timestamp">
+            <column name="archive_date" length="19" />
+        </property>
+        <property name="discountAmount" type="java.lang.Double">
+            <column name="discount_amount" precision="10" />
+        </property>
+        <many-to-one name="doctor" class="com.os.models.Doctor" fetch="select">
+            <column name="doctor_id" not-null="true" />
+        </many-to-one>
+        <set name="sessions" table="session" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="detection_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.Session" />
+        </set>
+        <set name="detectionStudies" table="detection_study" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="detection_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.DetectionStudy" />
+        </set>
+        <set name="prescriptions" table="prescription" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="detection_id" not-null="true" />
+            </key>
+            <one-to-many class="com.os.models.Prescription" />
+        </set>
+    </class>
+</hibernate-mapping>
