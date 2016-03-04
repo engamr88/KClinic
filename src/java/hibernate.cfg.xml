@@ -11,7 +11,6 @@
     <property name="hibernate.format_sql">true</property>
     <mapping resource="com/os/models/Prescription.hbm.xml"/>
     <mapping resource="com/os/models/Session.hbm.xml"/>
-    <mapping resource="com/os/models/Doctor.hbm.xml"/>
     <mapping resource="com/os/models/CaseStudy.hbm.xml"/>
     <mapping resource="com/os/models/Medication.hbm.xml"/>
     <mapping resource="com/os/models/Form.hbm.xml"/>

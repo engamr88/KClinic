@@ -40,7 +40,7 @@
                         </h:outputLabel>
                     </div>
                 </div>
-                <p:commandLink styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="PF('reservationDlg').show();"/>
+                <p:commandLink id="addResevation" styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="window.open('newReservation/newReservstionIndex.xhtml?cal=#{reservationView.cal}');"/>
                 <p:dataList value="#{reservationView.reservationList}" var="reservation" type="ordered">
                     <h:outputLabel value="#{reservation.patient.patientFullName}"/>
                 </p:dataList>

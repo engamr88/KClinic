@@ -5,7 +5,7 @@
 package com.os.ks.work.detection;
 
 import com.os.models.Detection;
-import com.os.models.Doctor;
+import com.os.models.User;
 import com.os.models.Patient;
 import com.os.util.hjpf.wrapper.AbstractModelWrapper;
 import java.util.Date;
@@ -58,7 +58,7 @@ public class DetectionModelWrapper extends AbstractModelWrapper<Detection> {
 
     private void initModel() {
         Detection detection = new Detection();
-        detection.setDoctor(new Doctor());
+        detection.setDoctor(new User());
         detection.setPatient(new Patient());
         setModel(detection);
     }

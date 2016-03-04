@@ -5,10 +5,10 @@
 package com.os.ks.work.reservation;
 
 import com.os.models.Category;
-import com.os.models.Doctor;
 import com.os.models.Patient;
 import com.os.models.PriceList;
 import com.os.models.Reservation;
+import com.os.models.User;
 import com.os.util.hjpf.wrapper.AbstractModelWrapper;
 import java.util.Date;
 
@@ -58,7 +58,7 @@ public class ReservationModelWrapper extends AbstractModelWrapper<Reservation> {
         reservation.setCategory(new Category());
         reservation.setPatient(new Patient());
         reservation.setPriceList(new PriceList());
-        reservation.setDoctor(new Doctor());
+        reservation.setDoctor(new User());
         setModel(reservation);
     }
 

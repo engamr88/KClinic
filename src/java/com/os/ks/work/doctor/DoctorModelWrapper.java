@@ -4,17 +4,15 @@
  */
 package com.os.ks.work.doctor;
 
-import com.os.ks.work.doctor.*;
-import com.os.models.Doctor;
+import com.os.models.User;
 import com.os.util.hjpf.wrapper.AbstractModelWrapper;
 import java.util.Date;
-import java.util.HashSet;
 
 /**
  *
  * @author egyptianeagle
  */
-public class DoctorModelWrapper extends AbstractModelWrapper<Doctor> {
+public class DoctorModelWrapper extends AbstractModelWrapper<User> {
 
     public DoctorModelWrapper() {
         initModel();
@@ -50,7 +48,7 @@ public class DoctorModelWrapper extends AbstractModelWrapper<Doctor> {
     }
 
     @Override
-    public Doctor getModel() {
+    public User getModel() {
         return model;
     }
 
@@ -60,8 +58,7 @@ public class DoctorModelWrapper extends AbstractModelWrapper<Doctor> {
     }
 
     private void initModel() {
-        Doctor doctor = new Doctor();
-        setModel(new Doctor());
+        setModel(new User());
     }
 
     

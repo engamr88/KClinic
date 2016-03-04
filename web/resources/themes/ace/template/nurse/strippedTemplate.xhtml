@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html" locale="#{localeBean.locale}">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <f:facet name="first">
+
+
+                <style>
+                    @font-face {
+                        font-family: 'Open Sans';
+                        font-style: normal;
+                        font-weight: 300;
+                        src: local('Open Sans Light'), local('OpenSans-Light'), url('#{request.contextPath}/resources/themes/ace/font/font1.woff') format('woff');
+                    }
+                    @font-face {
+                        font-family: 'Open Sans';
+                        font-style: normal;
+                        font-weight: 400;
+                        src: local('Open Sans'), local('OpenSans'), url('#{request.contextPath}/resources/themes/ace/font/font2.woff') format('woff');
+                    }
+                </style>    
+
+
+
+
+                <f:view encoding="UTF-8"/>
+                <h:outputStylesheet library="themes"  name="ace/css/bootstrap.min.css"/>
+                <h:outputStylesheet library="themes"  name="ace/css/bootstrap-responsive.min.css"/>
+                <h:outputStylesheet library="themes"  name="ace/css/font-awesome.min.css"/>
+                <!--<h:outputStylesheet library="themes"  name="mukam/css/font-awesome.min.css"/>-->
+                <h:outputStylesheet library="themes"  name="mukam/css/icons.css"/>
+                <!--<h:outputStylesheet library="themes"  name="mukam/css/font-awesome.css"/>-->
+                <h:outputStylesheet library="themes"  name="ace/css/ace.min.css"/>  
+                <h:outputStylesheet library="themes"  name="ace/css/ace-responsive.min.css"/>  
+                <h:outputStylesheet library="themes"  name="ace/css/ace-skins.min.css"/>  
+                <h:outputStylesheet library="themes"  name="ace/css/chosen.css"/>  
+                <h:outputStylesheet library="themes"  name="ace/css/datepicker.css"/>
+                <h:outputStylesheet library="themes"  name="ace/css/bootstrap-timepicker.css"/>
+                <!--                <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript" ></script>-->
+                <!--
+                <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
+                
+                            <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.js"/>               
+               <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+                 <script src="http://code.jquery.com/jquery-migrate-1.2.1.js"></script>
+                -->
+                <h:outputScript library="themes"  name="ace/js/jquery-2.0.3.min.js"  />
+                <h:outputScript library="themes"  name="ace/js/jquery-migrate-1.2.1.js"  />
+
+
+
+
+
+
+                <h:outputScript library="themes"  name="ace/js/primefaces/jquery-plugins.js" />
+                <!--
+                            <h:outputScript library="themes"  name="ace/js/jquery-ui-1.10.3.custom.min.js" />
+                -->        
+                <h:outputScript library="themes"  name="ace/js/jquery.ui.touch-punch.min.js" />
+                <h:outputScript library="themes"  name="ace/js/markdown/markdown.min.js" />
+                <h:outputScript library="themes"  name="ace/js/markdown/bootstrap-markdown.min.js" />
+                <h:outputScript library="themes"  name="ace/js/jquery.hotkeys.min.js" />
+
+
+
+
+                <h:outputScript library="themes"  name="ace/js/jquery.mobile.custom.min.js" />
+
+                <h:outputScript library="themes"  name="ace/js/jquery.slimscroll.min.js" />
+                <h:outputScript library="themes"  name="ace/js/bootstrap.min.js" />
+                <h:outputScript library="themes"  name="ace/js/chosen.jquery.min.js" />
+                <h:outputScript library="themes"  name="ace/js/bootstrap-wysiwyg.min.js" />
+                <h:outputScript library="themes"  name="ace/js/bootbox.min.js" />
+
+
+
+                <h:outputScript library="themes"  name="ace/js/ace-elements.min.js" />
+                <h:outputScript library="themes"  name="ace/js/ace.min.js" />
+                <h:outputScript library="themes"  name="ace/js/ace.min.js" />
+                <h:outputScript library="themes"  name="ace/js/date-time/bootstrap-timepicker.min.js" />
+                <h:outputScript library="themes"  name="ace/js/date-time/bootstrap-datepicker.min.js" />
+
+                <h:outputStylesheet library="themes"  name="ace/css/custom.css"/>
+
+                <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>KClinic control System</title>
+                <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/kindasoft.png" />
+            </f:facet>
+
+
+
+
+            <h:panelGroup rendered="#{localeBean.dirction=='RTL'}">
+                <script>
+
+
+                    function arabSwitch() {
+                        // alert("arabic");
+                        switch_direction();
+                        $('body').css('direction', 'rtl');
+                    }
+
+                </script>
+            </h:panelGroup>   
+
+
+        </h:head>
+        <h:body style="color: #565663 !important;background-color: #565663 !important"    onload="arabSwitch();" >
+
+            <div class="main-container container-fluid">
+
+                <!--<ui:include src="leftMenu.xhtml"/>-->
+
+                <!--<div class="main-content">-->
+                    <div class="breadcrumbs" id="breadcrumbs">
+
+                    </div>
+                
+                    <h:outputLabel value="#{navigator.start}"/>
+
+
+                    <div class="page-content">
+
+
+
+
+
+
+                        <ui:insert name="content"></ui:insert>
+
+
+
+
+                    </div>
+
+
+
+
+                <!--</div>-->
+
+
+            </div>
+
+
+            <ui:include src="../../../../../secure/include/AjaxStatus.xhtml"/> 
+
+
+
+
+
+
+            <script>
+
+                function backToTop() {
+                    $('html, body').animate({scrollTop: 0}, 'slow');
+                    return false;
+                }
+                jQuery = $;
+                $(function () {
+                    jQuery = $;
+                    //  alert("yes : JQuery");
+                    /*   $('.date-picker').datepicker().next().on(ace.click_event, function(){
+                     $(this).prev().focus();
+                     });*/
+                    //$('#editor1').ace_wysiwyg();
+
+                    //    alert("Done 1");
+                    //       $(".chzn-select").chosen(); 
+                    //   alert("Done");
+                    /*$('#form-cont').on('show', function () {
+                     alert ("YES MMMMMMMMMMM");
+                     $(this).find('.chzn-container').each(function(){
+                     $(this).find('a:first-child').css('width' , '200px');
+                     $(this).find('.chzn-drop').css('width' , '210px');
+                     $(this).find('.chzn-search input').css('width' , '200px');
+                     });
+                     });*/
+                });
+            </script> 
+        </h:body>
+    </f:view> 
+
+</html>
+

@@ -5,7 +5,7 @@
 package com.os.ks.work.detection;
 
 import com.os.models.Detection;
-import com.os.models.Doctor;
+import com.os.models.User;
 import com.os.models.Patient;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
 import java.util.Map;
@@ -77,7 +77,7 @@ public class DetectionModelDAO extends AbstractDAOWrapper<DetectionModelWrapper>
     private void initModelWrapper() {
         DetectionModelWrapper detectionMW = new DetectionModelWrapper();
         detectionMW.setModel(new Detection());
-        detectionMW.getModel().setDoctor(new Doctor());
+        detectionMW.getModel().setDoctor(new User());
         detectionMW.getModel().setPatient(new Patient());
         setModelWrapper(detectionMW);
     }

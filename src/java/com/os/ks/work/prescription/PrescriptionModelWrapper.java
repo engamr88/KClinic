@@ -10,6 +10,7 @@ import com.os.models.Dose;
 import com.os.models.Form;
 import com.os.models.Medication;
 import com.os.models.Prescription;
+import com.os.models.User;
 import com.os.util.hjpf.wrapper.AbstractModelWrapper;
 import java.util.Date;
 
@@ -65,6 +66,7 @@ public class PrescriptionModelWrapper extends AbstractModelWrapper<Prescription>
         prescription.setConcentration(new Concentration());
         prescription.setForm(new Form());
         prescription.setDetection(new Detection());
+        prescription.setDoctor(new User());
         setModel(prescription);
     }
 

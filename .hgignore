@@ -1,2 +1,4 @@
 syntax: glob
 build/web/WEB-INF/*
+*.orig
+build/*

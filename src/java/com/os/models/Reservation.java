@@ -15,7 +15,7 @@ public class Reservation implements java.io.Serializable {
     private Integer reservationType;
     private Date reservationDate;
     private Integer reservationNumber;
-    private Doctor doctor;
+    private User doctor;
 
     public Reservation() {
     }
@@ -27,7 +27,7 @@ public class Reservation implements java.io.Serializable {
         this.reservationNumber = reservationNumber;
     }
 
-    public Reservation(Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, Doctor doctor) {
+    public Reservation(Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, User doctor) {
         this.category = category;
         this.patient = patient;
         this.priceList = priceList;
@@ -93,11 +93,11 @@ public class Reservation implements java.io.Serializable {
         this.reservationNumber = reservationNumber;
     }
 
-    public Doctor getDoctor() {
+    public User getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
+    public void setDoctor(User doctor) {
         this.doctor = doctor;
     }
 }

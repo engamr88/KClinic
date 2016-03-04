@@ -5,13 +5,15 @@
 package com.os.ks.work.reservation;
 
 import com.os.models.Category;
-import com.os.models.Doctor;
 import com.os.models.Patient;
 import com.os.models.PriceList;
 import com.os.models.Reservation;
+import com.os.models.User;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -58,14 +60,28 @@ public class ReservationModelDAO extends AbstractDAOWrapper<ReservationModelWrap
         HQL += createSearchCrti(null, null, filters);
         return HQL;
     }
-public List<Reservation> loadReservationList(Date date){
-    String hql="FROM Reservation model "
+
+    public List<Reservation> loadReservationList(Date date) {
+        Calendar calBefore = Calendar.getInstance();
+        Calendar calAfter = Calendar.getInstance();
+        calAfter.setTime(date);
+        calAfter.set(Calendar.HOUR, 12);
+        calAfter.set(Calendar.MINUTE, 0);
+        calAfter.set(Calendar.SECOND, 0);
+        
+        calBefore.setTime(date);
+//        calBefore.set(Calendar.DATE, Calendar.DAY_OF_MONTH+1);
+        calBefore.set(Calendar.HOUR, 0);
+        calBefore.set(Calendar.MINUTE, 0);
+        calBefore.set(Calendar.SECOND, 0);
+        String hql = "FROM Reservation model "
                 + "left join fetch model.category category "
                 + "left join fetch model.patient patient "
                 + "left join fetch model.priceList priceList "
-                + "left join fetch model.doctor doctor where model.reservationDate = '"+date+"'";
-    return list(hql);
-}
+                + "left join fetch model.doctor doctor where model.reservationDate > '" + calBefore.getTime() + "' and model.reservationDate < '" + calAfter.getTime() + "'";
+        return list(hql);
+    }
+
     @Override
     protected String createLoadHQL(Integer id) {
         String HQL = "FROM Reservation model "
@@ -109,7 +125,7 @@ public List<Reservation> loadReservationList(Date date){
         reservationMW.getModel().setCategory(new Category());
         reservationMW.getModel().setPatient(new Patient());
         reservationMW.getModel().setPriceList(new PriceList());
-        reservationMW.getModel().setDoctor(new Doctor());
+        reservationMW.getModel().setDoctor(new User());
         setModelWrapper(reservationMW);
     }
 

@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../../resources/themes/ace/template/nurse/strippedTemplate.xhtml">
+
+    <ui:define name="content">
+        <div class="row-fluid">
+            <div class="span12">
+                <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">       
+
+                    <div class="control-group">
+                        <h:outputLabel value="#{doctorMSG.slcDoctor}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:selectOneMenu id="doctor" required="true" requiredMessage="#{doctorMSG.slcDoctorReq}" styleClass="name-input" value="#{reservationView.doctorId}">
+                                <f:selectItem itemLabel="#{doctorMSG.slcDoctor}" itemValue="-1"/>
+                                <f:selectItems value="#{reservationView.doctorList}" var="doc" itemLabel="#{doc.doctorFullName}" itemValue="#{doc.id}"/>
+                            </h:selectOneMenu>
+                            <span class="help-inline">
+                                <p:message for="doctor"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <h:outputLabel value="#{reservationMSG.patientFullName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <p:autoComplete required="true" requiredMessage="#{commonMSG.emptyField}" var="patient" style="width: 100% !important;" styleClass="name-input" value="#{reservationView.selectedPatient}" converter="patient"
+                                            id="customPojo" completeMethod="#{reservationView.completePlayerByName}"
+                                            itemLabel="#{patient.patientFullName}" itemValue="#{patient}" >
+
+                                <p:column>
+                                    #{patient.patientFullName}
+                                </p:column>
+                            </p:autoComplete>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <h:outputLabel  value="#{questMSG.slcCategory}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:selectOneMenu required="true" requiredMessage="#{commonMSG.emptyField}" id="reservCategory" value="#{reservationView.categoryId}">
+                                <f:selectItem itemLabel="#{questMSG.slcCategory}" itemValue="-1"/>
+                                <f:selectItems value="#{reservationView.categoryList}" var="resCat" itemLabel="#{resCat.categoryTitle}" itemValue="#{resCat.id}"/>
+                                <p:ajax event="change" listener="#{reservationView.onCategoryLoad()}" update="form"/>
+                            </h:selectOneMenu>
+                            <span class="help-inline">
+                                <p:message for="reservCategory"/>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <h:outputLabel  value="#{reservationMSG.reservationType}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <p:selectOneRadio id="reservType"  value="#{reservationView.DAO.modelWrapper.model.reservationType}">
+                                <f:selectItem itemLabel="#{reservationMSG.detection}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{reservationMSG.consult}" itemValue="2"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel  value="#{reservationMSG.reservationNumber}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:inputText  id="reservationNumber" value="#{reservationView.DAO.modelWrapper.model.reservationNumber}"><font class="red">*</font></h:inputText>
+                            <span class="help-inline">
+                                <p:message for="reservationNumber"/>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h:outputLabel id="price" value="#{priceListMSG.slcPrice}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <p:selectOneRadio value="#{reservationView.priceId}" layout="grid" columns="1">
+                                <f:selectItems value="#{reservationView.priceWrapperList}" var="price" itemLabel="#{price.priceName}(#{price.priceAmount})" itemValue="#{price.selected}"/>
+                            </p:selectOneRadio>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <p:commandLink  value="#{commonMSG.save}" actionListener="#{reservationView.save()}" styleClass="btn btn-success" update="form" oncomplete="window.close();"/>
+                        <p:commandLink value="#{commonMSG.close}" actionListener="#{reservationView.clear()}" styleClass="btn btn-danger" oncomplete="window.close();"/>
+                    </div>
+
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+</ui:composition>

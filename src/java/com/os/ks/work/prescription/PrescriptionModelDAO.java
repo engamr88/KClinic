@@ -11,6 +11,7 @@ import com.os.models.Form;
 import com.os.models.Medication;
 import com.os.models.Patient;
 import com.os.models.Prescription;
+import com.os.models.User;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
 import java.util.Map;
 
@@ -19,11 +20,11 @@ import java.util.Map;
  * @author egyptianeagle
  */
 public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWrapper> {
-
+    
     public PrescriptionModelDAO() {
         initModelWrapper();
     }
-
+    
     @Override
     protected String createListHQL(String orderBy, String orderMode, Map filters) {
 //(Integer id, String doseName, String medicationName, String concentrationName, String formName, String patientFullName, Date prescriptionDate) {
@@ -46,7 +47,7 @@ public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWr
         HQL += createSearchCrti(orderBy, orderMode, filters);
         return HQL;
     }
-
+    
     @Override
     protected String createCountHQL(String orderBy, String orderMode, Map filters) {
         String HQL = "SELECT "
@@ -57,11 +58,11 @@ public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWr
         HQL += createSearchCrti(null, null, filters);
         return HQL;
     }
-
+    
     @Override
     protected String createLoadHQL(Integer id) {
         String HQL = "FROM Prescription model"
-                 + " left join fetch model.dose dose"
+                + " left join fetch model.dose dose"
                 + " left join fetch model.patient patient"
                 + " left join fetch model.form form"
                 + " left join fetch model.concentration concentration"
@@ -69,7 +70,7 @@ public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWr
                 + " where model.prescriptionId= " + id;
         return HQL;
     }
-
+    
     public Prescription loadPrescriptionById(Integer id) {
         String HQL = "FROM Prescription model"
                 + " left join fetch model.dose dose"
@@ -80,23 +81,23 @@ public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWr
                 + " where model.prescriptionId= " + id;
         return (Prescription) uniqueResult(HQL);
     }
-
+    
     @Override
     public boolean checkDuplication(String idName, Integer idvalue, String fieldName, String fieldValue, String extraCondition, String modelClass) {
         return super.checkDuplication(idName, idvalue, fieldName, fieldValue, extraCondition, modelClass); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
     @Override
     public void loadModelWrapper() {
         Prescription d = (Prescription) load(getModelWrapper().getId());
         getModelWrapper().setModel(d);
     }
-
+    
     @Override
     public PrescriptionModelWrapper getModelWrapper() {
         return super.getModelWrapper();
     }
-
+    
     private void initModelWrapper() {
         PrescriptionModelWrapper prescriptionMW = new PrescriptionModelWrapper();
         prescriptionMW.setModel(new Prescription());
@@ -105,9 +106,10 @@ public class PrescriptionModelDAO extends AbstractDAOWrapper<PrescriptionModelWr
         prescriptionMW.getModel().setConcentration(new Concentration());
         prescriptionMW.getModel().setDetection(new Detection());
         prescriptionMW.getModel().setForm(new Form());
+        prescriptionMW.getModel().setDoctor(new User());
         setModelWrapper(prescriptionMW);
     }
-
+    
     @Override
     public void clear() {
         initModelWrapper();

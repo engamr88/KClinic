@@ -4,8 +4,8 @@
  */
 package com.os.ks.work.doctor;
 
-import com.os.ks.work.doctor.*;
-import com.os.models.Doctor;
+import com.os.ks.work.user.UserModelWrapper;
+import com.os.models.User;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
 import java.util.HashMap;
 import java.util.List;
@@ -15,42 +15,55 @@ import java.util.Map;
  *
  * @author egyptianeagle
  */
-public class DoctorModelDAO extends AbstractDAOWrapper<DoctorModelWrapper> {
+public class DoctorModelDAO extends AbstractDAOWrapper<UserModelWrapper> {
 
     public DoctorModelDAO() {
         initModelWrapper();
     }
 
-    public DoctorModelWrapper fetchLoginedDoctor(String doctorUserName, String enctyptpassword) {
+    public UserModelWrapper fetchLoginedUser(String userName, String enctyptpassword) {
         String HQL = "SELECT "
-                + " new " + DoctorModelWrapper.class.getName() + "("
-                + " (model.doctorId) as id , "
-                + " (model.doctorUserName) as doctorUserName,"
-                + " (model.doctorPassword) as doctorPassword "
+                + " new " + UserModelWrapper.class.getName() + "("
+                + " (model.userId) as id , "
+                + " (model.userName) as userName,"
+                + " (model.userPassword) as userPassword,"
+                + " (model.userType) as userType "
                 + ") "
-                + " from Doctor model where model.doctorUserName = '" + doctorUserName + "' and model.doctorPassword = '" + enctyptpassword + "' ";
+                + " from User model where model.userName = '" + userName + "' and model.userPassword = '" + enctyptpassword + "' ";
         HQL += createSearchCrti(null, null, new HashMap());
-        return (DoctorModelWrapper) uniqueResult(HQL);
+        return (UserModelWrapper) uniqueResult(HQL);
     }
 
-   
-    public Doctor fetchLoginedDoctor(Integer doctorId) {
-        String HQL = " from Doctor model where model.doctorId = " + doctorId;
+    public User loadDoctorById(Integer doctorId) {
+        String HQL = " from User model where model.userId = " + doctorId;
 
-        return (Doctor) uniqueResult(HQL);
+        return (User) uniqueResult(HQL);
+    }
+
+    public List<DoctorModelWrapper> doctorWrapperList() {
+        String hql = "SELECT "
+                + " new " + DoctorModelWrapper.class.getName() + "("
+                + " (model.userId) as id , "
+                + " (model.userFullName) as userFullName, "
+                + " (model.userMobile) as userMobile, "
+                + " (model.userAddress) as userAddress "
+                + ") "
+                + " FROM User model where model.userType =2";
+        return list(hql);
     }
 
     @Override
     protected String createListHQL(String orderBy, String orderMode, Map filters) {
-     
+
         String HQL = "SELECT "
-                + " new " + DoctorModelWrapper.class.getName() + "("
-                + " (model.doctorId) as id , "
-                + " (model.doctorFullName) as doctorFullName, "
-                + " (model.doctorMobile) as doctorMobile, "
-                + " (model.doctorAddress) as doctorAddress "
+                + " new " + UserModelWrapper.class.getName() + "("
+                + " (model.userId) as id , "
+                + " (model.userFullName) as userFullName, "
+                + " (model.userMobile) as userMobile, "
+                + " (model.userAddress) as userAddress "
                 + ") "
-                + " FROM Doctor model";
+                + " FROM User model";
+        extraCondition = " model.userType =2";
 
         HQL += createSearchCrti(orderBy, orderMode, filters);
         return HQL;
@@ -59,21 +72,23 @@ public class DoctorModelDAO extends AbstractDAOWrapper<DoctorModelWrapper> {
     @Override
     protected String createCountHQL(String orderBy, String orderMode, Map filters) {
         String HQL = "SELECT "
-                + " count(model.doctorId) "
-                + " FROM Doctor model ";
+                + " count(model.userId) "
+                + " FROM User model ";
+        //  + " where model.userType in (1,4) group by model.userId";
+//        extraCondition = " model.userType =1";
         HQL += createSearchCrti(null, null, filters);
         return HQL;
     }
 
     @Override
     protected String createLoadHQL(Integer id) {
-        String HQL = "FROM Doctor model where model.doctorId= " + id;
+        String HQL = "FROM User model where model.userId= " + id;
         return HQL;
     }
 
-    public Doctor loadDoctorById(Integer id) {
-        String HQL = "FROM Doctor model where model.doctorId= " + id;
-        return (Doctor) uniqueResult(HQL);
+    public User loadUserById(Integer id) {
+        String HQL = "FROM User model where model.userId= " + id;
+        return (User) uniqueResult(HQL);
     }
 
     @Override
@@ -83,18 +98,18 @@ public class DoctorModelDAO extends AbstractDAOWrapper<DoctorModelWrapper> {
 
     @Override
     public void loadModelWrapper() {
-        Doctor d = (Doctor) load(getModelWrapper().getId());
+        User d = (User) load(getModelWrapper().getId());
         getModelWrapper().setModel(d);
     }
 
     @Override
-    public DoctorModelWrapper getModelWrapper() {
+    public UserModelWrapper getModelWrapper() {
         return super.getModelWrapper();
     }
 
     private void initModelWrapper() {
-        DoctorModelWrapper doctorMW = new DoctorModelWrapper();
-        setModelWrapper(doctorMW);
+        UserModelWrapper userMW = new UserModelWrapper();
+        setModelWrapper(userMW);
     }
 
     @Override

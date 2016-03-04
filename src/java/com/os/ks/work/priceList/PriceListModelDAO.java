@@ -6,6 +6,7 @@ package com.os.ks.work.priceList;
 
 import com.os.models.PriceList;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,6 +34,11 @@ public class PriceListModelDAO extends AbstractDAOWrapper<PriceListModelWrapper>
         return HQL;
     }
 
+    public List<PriceList> loadPriceListByCategoryId(int categoryId) {
+        String hql = "FROM PriceList model left join fetch model.category category where category.categoryId=" + categoryId;
+        return list(hql);
+    }
+
     @Override
     protected String createCountHQL(String orderBy, String orderMode, Map filters) {
         String HQL = "SELECT "
@@ -51,7 +57,7 @@ public class PriceListModelDAO extends AbstractDAOWrapper<PriceListModelWrapper>
     }
 
     public PriceList loadPriceListById(Integer id) {
-        String HQL = "FROM PriceList left join fetch model.category category model where model.priceListId= " + id;
+        String HQL = "FROM PriceList model left join fetch model.category category where model.priceListId= " + id;
         return (PriceList) uniqueResult(HQL);
     }
 

@@ -19,7 +19,7 @@ public class Detection  implements java.io.Serializable {
      private Integer archive;
      private Date archiveDate;
      private Double discountAmount;
-     private Doctor doctor;
+     private User doctor;
      private Set<Session> sessions = new HashSet<Session>(0);
      private Set<DetectionStudy> detectionStudies = new HashSet<DetectionStudy>(0);
      private Set<Prescription> prescriptions = new HashSet<Prescription>(0);
@@ -32,7 +32,7 @@ public class Detection  implements java.io.Serializable {
         this.patient = patient;
         this.archive = archive;
     }
-    public Detection(Patient patient, String note, Double extraFees, Integer archive, Date archiveDate, Double discountAmount,Doctor doctor, Set<Session> sessions, Set<DetectionStudy> detectionStudies, Set<Prescription> prescriptions) {
+    public Detection(Patient patient, String note, Double extraFees, Integer archive, Date archiveDate, Double discountAmount,User doctor, Set<Session> sessions, Set<DetectionStudy> detectionStudies, Set<Prescription> prescriptions) {
        this.patient = patient;
        this.note = note;
        this.extraFees = extraFees;
@@ -116,11 +116,11 @@ public class Detection  implements java.io.Serializable {
         this.prescriptions = prescriptions;
     }
 
-    public Doctor getDoctor() {
+    public User getDoctor() {
         return doctor;
     }
 
-    public void setDoctor(Doctor doctor) {
+    public void setDoctor(User doctor) {
         this.doctor = doctor;
     }
 }

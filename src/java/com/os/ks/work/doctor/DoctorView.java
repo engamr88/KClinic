@@ -4,7 +4,6 @@
  */
 package com.os.ks.work.doctor;
 
-import com.os.ks.work.user.DoctorModelDAO;
 import com.os.util.CommonUtil;
 import com.os.util.hjpf.view.ColumnModel;
 import com.os.util.hjpf.view.ViewAbstract;

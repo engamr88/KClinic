@@ -26,8 +26,8 @@
         <property name="discountAmount" type="java.lang.Double">
             <column name="discount_amount" precision="10" />
         </property>
-        <many-to-one name="doctor" class="com.os.models.Doctor" fetch="select">
-            <column name="doctor_id" not-null="true" />
+        <many-to-one name="doctor" class="com.os.models.User" fetch="select">
+            <column name="user_id" not-null="true" />
         </many-to-one>
         <set name="sessions" table="session" inverse="true" lazy="true" fetch="select">
             <key>
