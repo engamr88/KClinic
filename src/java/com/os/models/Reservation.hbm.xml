@@ -26,7 +26,11 @@
         <property name="reservationNumber" type="java.lang.Integer">
             <column name="reservation_number" not-null="true" />
         </property>
-         <many-to-one name="doctor" class="com.os.models.User" fetch="select">
+        
+        <property name="archive">
+            <column name="archive"/>
+        </property>
+        <many-to-one name="doctor" class="com.os.models.User" fetch="select">
             <column name="user_id" not-null="true" />
         </many-to-one>
     </class>

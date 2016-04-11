@@ -59,16 +59,6 @@
                     </div>
 
                     <div class="control-group">
-                        <h:outputLabel  value="#{reservationMSG.reservationNumber}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
-                        <div class="controls">
-                            <h:inputText  id="reservationNumber" value="#{reservationView.DAO.modelWrapper.model.reservationNumber}"><font class="red">*</font></h:inputText>
-                            <span class="help-inline">
-                                <p:message for="reservationNumber"/>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
                         <h:outputLabel id="price" value="#{priceListMSG.slcPrice}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
                         <div class="controls">
                             <p:selectOneRadio value="#{reservationView.priceId}" layout="grid" columns="1">
@@ -78,8 +68,8 @@
                     </div>
 
                     <div class="form-actions">
-                        <p:commandLink  value="#{commonMSG.save}" actionListener="#{reservationView.save()}" styleClass="btn btn-success" update="form" oncomplete="window.close();"/>
-                        <p:commandLink value="#{commonMSG.close}" actionListener="#{reservationView.clear()}" styleClass="btn btn-danger" oncomplete="window.close();"/>
+                        <p:commandLink  value="#{commonMSG.save}" actionListener="#{reservationView.save()}" styleClass="btn btn-success" update="form"/>
+                        <p:commandLink value="#{commonMSG.close}" actionListener="#{reservationView.clear()}" styleClass="btn btn-danger" oncomplete="window.location.href='../nurseIndex.xhtml';"/>
                     </div>
 
                 </h:form>

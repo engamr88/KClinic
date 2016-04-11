@@ -16,6 +16,7 @@ public class Reservation implements java.io.Serializable {
     private Date reservationDate;
     private Integer reservationNumber;
     private User doctor;
+    private boolean archive;
 
     public Reservation() {
     }
@@ -35,6 +36,18 @@ public class Reservation implements java.io.Serializable {
         this.reservationDate = reservationDate;
         this.reservationNumber = reservationNumber;
         this.doctor = doctor;
+    }
+
+    public Reservation(Integer reservationId, Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, User doctor, boolean archive) {
+        this.reservationId = reservationId;
+        this.category = category;
+        this.patient = patient;
+        this.priceList = priceList;
+        this.reservationType = reservationType;
+        this.reservationDate = reservationDate;
+        this.reservationNumber = reservationNumber;
+        this.doctor = doctor;
+        this.archive = archive;
     }
 
     public Integer getReservationId() {
@@ -100,4 +113,13 @@ public class Reservation implements java.io.Serializable {
     public void setDoctor(User doctor) {
         this.doctor = doctor;
     }
+
+    public boolean isArchive() {
+        return archive;
+    }
+
+    public void setArchive(boolean archive) {
+        this.archive = archive;
+    }
+    
 }

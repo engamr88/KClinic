@@ -25,6 +25,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -60,27 +62,25 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
     private Integer priceId;
     private List<DoctorModelWrapper> doctorList = new ArrayList<>();
     private List<CategoryModelWrapper> categoryList = new ArrayList<>();
-    private Date reservedDate;
+    private Date today;
+
     public ReservationView() {
         super(new ReservationModelDAO(), "com.os.ks.work.reservation.messages.Reservation");
-        try {
-            String dataParam = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("cal");
-            if (dataParam != null) {
-//                SimpleDateFormat formatter = new SimpleDateFormat("dd/mm/yyyy hh:mm a");
-                SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-                reservedDate = df.parse(dataParam);
-            }
-            reservationList = dao.loadReservationList(new Date());
-            patientList = new PatientModelDAO().loadPatientWrapperList();
-            categoryId = -1;
-            doctorId = -1;
-            priceId = -1;
-            doctorList = new DoctorModelDAO().doctorWrapperList();
-            categoryList = new CategoryModelDAO().loadCategoryWrapperList();
-            cal = new Date();
-        } catch (ParseException ex) {
-            Logger.getLogger(ReservationView.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Calendar todayCal = Calendar.getInstance();
+        todayCal.set(Calendar.HOUR, 0);
+        todayCal.set(Calendar.AM_PM, Calendar.AM);
+        todayCal.set(Calendar.MINUTE, 0);
+        todayCal.set(Calendar.SECOND, 0);
+        today = todayCal.getTime();
+
+        reservationList = dao.loadReservationList(new Date());
+        patientList = new PatientModelDAO().loadPatientWrapperList();
+        categoryId = -1;
+        doctorId = -1;
+        priceId = -1;
+        doctorList = new DoctorModelDAO().doctorWrapperList();
+        categoryList = new CategoryModelDAO().loadCategoryWrapperList();
+        cal = new Date();
     }
 
     public void onCategoryLoad() {
@@ -104,15 +104,18 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         priceWrapperList = new ArrayList<>();
     }
 
-    public void onDateReservations() {
+    private void loadReservations() {
         if (cal == null) {
             reservationList = dao.loadReservationList(new Date());
         } else {
             reservationList = dao.loadReservationList(cal);
         }
+    }
+
+    public void onDateReservations() {
+        loadReservations();
         System.out.println("cal::" + cal);
-//        RequestContext context = RequestContext.getCurrentInstance();
-//        context.execute("PF('reservationDlg').show();");
+        System.out.println("Today:: " + today);
     }
 
     @Override
@@ -133,8 +136,14 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 
     @Override
     public void save() {
-        super.save(); //To change body of generated methods, choose Tools | Templates.
-        System.out.println("Entered here .......");
+        if (validateSave()) {
+            System.out.println("Entered here .......");
+            super.save(); //To change body of generated methods, choose Tools | Templates.
+            onDateReservations();
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.execute("window.location.href='../nurseIndex.xhtml'");
+        }
+
     }
 
     @Override
@@ -147,7 +156,18 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         dao.getModelWrapper().getModel().setCategory(selectedCategory);
         dao.getModelWrapper().getModel().setDoctor(doctor);
         dao.getModelWrapper().getModel().setPriceList(price);
-        dao.getModelWrapper().getModel().setReservationDate(reservedDate);
+        dao.getModelWrapper().getModel().setReservationDate(new Date());
+        if (reservationList.isEmpty()) {
+            dao.getModelWrapper().getModel().setReservationNumber(1);
+        } else {
+            int temp = 0;
+            for (Reservation reserv : reservationList) {
+                if (reserv.getReservationNumber() > temp) {
+                    temp = reserv.getReservationNumber();
+                }
+            }
+            dao.getModelWrapper().getModel().setReservationNumber(temp + 1);
+        }
     }
 
     public ArrayList<PatientModelWrapper> completePlayerByName(String query) {
@@ -183,11 +203,74 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         } else if (dao.getModelWrapper().getModel().getReservationType() == null) {
             CommonUtil.ViewValidationMessage("form:reservType", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
             return false;
-        } else if (dao.getModelWrapper().getModel().getReservationNumber() == null) {
-            CommonUtil.ViewValidationMessage("form:reservType", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
-            return false;
+        }
+//        else if (dao.getModelWrapper().getModel().getReservationNumber() == null) {
+//            CommonUtil.ViewValidationMessage("form:reservType", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
+//            return false;
+//        }
+        System.out.println("selectedPatient.getId():: " + selectedPatient.getId());
+        if (selectedPatient.getId() != null) {
+            System.out.println("Entered selecting patient valid");
+            for (Reservation reserv : reservationList) {
+                if (reserv.getPatient().getPatientId().equals(selectedPatient.getId())) {
+                    CommonUtil.ViewValidationMessage("form:customPojo", FacesMessage.SEVERITY_ERROR, "INFO: ", res.getString("alreadyReserved"));
+                    return false;
+                }
+            }
         }
         return true;
+    }
+
+    public void delayReservation(Reservation reservation) {
+        int temp = reservation.getReservationNumber() + 1;
+        for (Reservation reserv : reservationList) {
+            if (reserv.getReservationNumber().equals(temp)) {
+                reserv.setReservationNumber(temp - 1);
+                dao.getModelWrapper().setModel(reserv);
+                dao.update();
+                break;
+            }
+        }
+        reservation.setReservationNumber(temp);
+        dao.getModelWrapper().setModel(reservation);
+        dao.update();
+        loadReservations();
+    }
+
+    public void cancelReservation(Reservation reservation) {
+        if (reservationList.get(0).getReservationId().equals(reservation.getReservationId())) { // first of list
+            dao.getModelWrapper().setModel(reservation);
+            dao.delete();
+            reservationList.remove(reservation);
+            int temp = 1;
+            for (Reservation reserv : reservationList) {
+                reserv.setReservationNumber(temp);
+                dao.getModelWrapper().setModel(reserv);
+                dao.update();
+                temp++;
+            }
+            
+        } else if (reservationList.get(reservationList.size() - 1).getReservationId().equals(reservation.getReservationId())) { // get last
+            dao.getModelWrapper().setModel(reservation);
+            dao.delete();
+        } else {
+            int temp=reservation.getReservationNumber();
+            List<Reservation>restReservList = new ArrayList<>();
+            for(Reservation reserv:reservationList){
+                if(reserv.getReservationNumber()>temp){
+                    restReservList.add(reserv);
+                }
+            }
+            for(Reservation restReserv:restReservList){
+                restReserv.setReservationNumber(temp);
+                dao.getModelWrapper().setModel(restReserv);
+                dao.update();
+                temp++;
+            }
+            dao.getModelWrapper().setModel(reservation);
+            dao.delete();
+        }
+        loadReservations();
     }
 
     @Override
@@ -281,6 +364,14 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 
     public void setPriceId(Integer priceId) {
         this.priceId = priceId;
+    }
+
+    public Date getToday() {
+        return today;
+    }
+
+    public void setToday(Date today) {
+        this.today = today;
     }
 
 }

@@ -31,20 +31,44 @@
             }
         </style>
         <div class="row-fluid">
-            <div class="span6" style="border: 1px solid;">
-                <div class="control-group">
-                    <h:outputLabel value="#{commonMSG.date}" styleClass="control-label"/>
-                    <div class="controls">
-                        <h:outputLabel value="#{reservationView.cal}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputLabel>
+            <h:panelGroup id="listData">
+                <div class="span6" style="border: 1px solid;">
+                    <div class="control-group">
+                        <h:outputLabel value="#{commonMSG.date}" styleClass="control-label"/>
+                        <div class="controls">
+                            <h:outputLabel value="#{reservationView.cal}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputLabel>
+                        </div>
                     </div>
+                    <p:commandLink disabled="#{reservationView.cal.date lt reservationView.today.date}" id="addResevation" styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="window.location.href = 'newReservation/newReservstionIndex.xhtml?cal=#{reservationView.cal}';"/>
+                    <ui:repeat value="#{reservationView.reservationList}" var="reservation">
+                        <div class="row">
+                            <div class="span6">
+                                <p:commandLink value="#{reservationMSG.enterDone}" styleClass="btn btn-success"/>
+                                <p:commandLink value="#{reservationMSG.enterPostponed}"
+                                               styleClass="btn btn-warning"
+                                               actionListener="#{reservationView.delayReservation(reservation)}"
+                                               update="form:listData"
+                                               disabled="#{reservationView.reservationList.indexOf(reservation)==reservationView.reservationList.size()-1}"/>
+                                <p:commandLink value="#{commonMSG.cancel}"
+                                               styleClass="btn btn-danger"
+                                               actionListener="#{reservationView.cancelReservation(reservation)}"
+                                               update="form:listData"/>
+                            </div>
+                            <div class="span6">
+                                <div class="control-group">
+                                    <h:outputLabel value=" #{reservation.reservationNumber}." styleClass="control-label" style="font-weight: bold;font-size: large;"/>
+                                    <div class="controls">
+                                        <h:outputLabel value="#{reservation.patient.patientFullName}" style="padding-top: 5px;font-weight: bold;font-size: large;"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </ui:repeat>
                 </div>
-                <p:commandLink id="addResevation" styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="window.open('newReservation/newReservstionIndex.xhtml?cal=#{reservationView.cal}');"/>
-                <p:dataList value="#{reservationView.reservationList}" var="reservation" type="ordered">
-                    <h:outputLabel value="#{reservation.patient.patientFullName}"/>
-                </p:dataList>
-            </div>
+            </h:panelGroup>
             <div class="span6">
                 <p:calendar id="inline" style="width: 100%"  mode="inline" value="#{reservationView.cal}" >
                     <p:ajax event="dateSelect" listener="#{reservationView.onDateReservations()}" update="reservationGroup" />
@@ -53,14 +77,14 @@
         </div>
     </h:panelGroup>
     <script>
-                PrimeFaces.locales ['ar'] = { closeText: 'إغلق', prevText: 'إلى الخلف', nextText: 'إلى الأمام', currentText: 'بداية',
-                    monthNames: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر' ],
-                    monthNamesShort: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر' ],
-                    dayNames: ['يوم الأحد‎', 'يوم الإثنين‎', 'يوم الثلاثاء‎', '‏يوم الأَرْبعاء‎', '‏يوم الخَمِيس‎', 'يوم الجُمْعَة‎‎', 'يوم السَّبْت'],
-                    dayNamesShort: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
-                    dayNamesMin: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
-                    weekHeader: 'الأسبوع', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix:'',
-                    timeOnlyTitle: 'الوقت فقط', timeText: 'الوقت', hourText: 'ساعة', minuteText: 'دقيقة', secondText: 'ثانية',
-                    ampm: false, month: 'الشهر', week: 'الأسبوع', day: 'اليوم', allDayText: 'سا ئراليوم' };
+        PrimeFaces.locales ['ar'] = {closeText: 'إغلق', prevText: 'إلى الخلف', nextText: 'إلى الأمام', currentText: 'بداية',
+            monthNames: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+            monthNamesShort: ['يناير', 'فبراير', 'مارس', 'ابريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+            dayNames: ['يوم الأحد‎', 'يوم الإثنين‎', 'يوم الثلاثاء‎', '‏يوم الأَرْبعاء‎', '‏يوم الخَمِيس‎', 'يوم الجُمْعَة‎‎', 'يوم السَّبْت'],
+            dayNamesShort: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
+            dayNamesMin: ['الأحد‎', 'الإثنين‎', 'الثلاثاء‎', 'الأَرْبعاء‎', 'الخَمِيس‎', 'الجُمْعَة‎‎', 'السَّبْت'],
+            weekHeader: 'الأسبوع', firstDay: 1, isRTL: false, showMonthAfterYear: false, yearSuffix: '',
+            timeOnlyTitle: 'الوقت فقط', timeText: 'الوقت', hourText: 'ساعة', minuteText: 'دقيقة', secondText: 'ثانية',
+            ampm: false, month: 'الشهر', week: 'الأسبوع', day: 'اليوم', allDayText: 'سا ئراليوم'};
     </script>
 </h:panelGroup>
