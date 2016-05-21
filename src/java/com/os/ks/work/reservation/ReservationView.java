@@ -11,8 +11,6 @@ import com.os.ks.work.doctor.DoctorModelWrapper;
 import com.os.ks.work.patient.PatientModelDAO;
 import com.os.ks.work.patient.PatientModelWrapper;
 import com.os.ks.work.priceList.PriceListModelDAO;
-import com.os.ks.work.user.UserModelDAO;
-import com.os.ks.work.user.UserModelWrapper;
 import com.os.models.Category;
 import com.os.models.Patient;
 import com.os.models.PriceList;
@@ -23,23 +21,15 @@ import com.os.util.CommonUtil;
 import com.os.util.HibernateUtil;
 import com.os.util.hjpf.view.ColumnModel;
 import com.os.util.hjpf.view.ViewAbstract;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.MatchMode;
@@ -90,7 +80,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 
     public void changeStyle(boolean status) {
         showCalendarStyle = status;
-        System.out.println("showCalendarStyle :: "+showCalendarStyle);
+        System.out.println("showCalendarStyle :: " + showCalendarStyle);
     }
 
     public void onCategoryLoad() {
@@ -112,6 +102,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         doctorId = -1;
         priceId = -1;
         priceWrapperList = new ArrayList<>();
+        clearNewReservation();
     }
 
     private void loadReservations() {
@@ -150,6 +141,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
             System.out.println("Entered here .......");
             super.save(); //To change body of generated methods, choose Tools | Templates.
             onDateReservations();
+            clearNewReservation();
             RequestContext requestContext = RequestContext.getCurrentInstance();
             requestContext.execute("window.location.href='../nurseIndex.xhtml'");
         }
@@ -205,11 +197,25 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         return null;
     }
 
+    public void clearNewReservation() {
+        doctorId = -1;
+        categoryId = -1;
+    }
+
     @Override
     protected boolean validateSave() {
         System.out.println("DoctorId :: " + doctorId);
-        if (doctorId == -1) {
+        System.out.println("categoryId :: " + categoryId);
+//        System.out.println("selectedPatient.getId() :: " + selectedPatient.getId());
+        if (categoryId == -1) {
+            System.out.println("Entered category select validation 0000000000000");
+            CommonUtil.ViewValidationMessage("form:reservCategory", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
+            return false;
+        } else if (doctorId == -1) {
             CommonUtil.ViewValidationMessage("form:doctor", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
+            return false;
+        } else if (selectedPatient==null||selectedPatient.getId() == null) {
+            CommonUtil.ViewValidationMessage("form:customPojo", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
             return false;
         } else if (priceId == -1 || priceId == null) {
             CommonUtil.ViewValidationMessage("form:price", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
@@ -218,10 +224,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
             CommonUtil.ViewValidationMessage("form:reservType", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
             return false;
         }
-//        else if (dao.getModelWrapper().getModel().getReservationNumber() == null) {
-//            CommonUtil.ViewValidationMessage("form:reservType", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
-//            return false;
-//        }
+
         System.out.println("selectedPatient.getId():: " + selectedPatient.getId());
         System.out.println("reservationList:: " + reservationList);
         if (selectedPatient.getId() != null) {

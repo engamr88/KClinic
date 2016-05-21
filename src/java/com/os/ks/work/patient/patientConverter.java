@@ -5,6 +5,8 @@
  */
 package com.os.ks.work.patient;
 
+import com.os.ks.work.reservation.ReservationView;
+import com.os.ks.work.user.LoginModelView;
 import com.os.util.CommonListReslover;
 import com.os.util.CommonUtil;
 import javax.faces.application.FacesMessage;
@@ -13,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -23,12 +26,15 @@ public class patientConverter implements Converter{
       @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
 
+        HttpSession httpsession = (HttpSession) FacesContext.getCurrentInstance().
+                getExternalContext().getSession(false);
+        ReservationView reservationView = (ReservationView) httpsession.getAttribute("reservationView");
         if (value == null || value.trim().isEmpty() || value.equals("null")) {
             return null;
         } else {
             try {
                 int id = Integer.parseInt(value);
-                for (Object s : CommonUtil.getNavigator().getCurrentView().getCommonList(CommonListReslover.PATIENT_LIST)) {
+                for (Object s : reservationView.getCommonList(CommonListReslover.PATIENT_LIST)) {
                     if (((PatientModelWrapper) s).getId() == id) {
                         return s;
                     }
