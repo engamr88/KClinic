@@ -69,7 +69,7 @@ public abstract class AbstractDAOWrapper<T extends AbstractModelWrapper> extends
      }*/
     protected boolean checkDuplication(String idName, Integer idvalue, String fieldName, String fieldValue, String extraCondition, String modelClass) {
         String HQL = "SELECT (model." + idName + ") as id FROM " + modelClass + " model "
-                + " WHERE  id<>" + idvalue;
+                + " WHERE  id<>" + idvalue+" and model.userType =2";
         if (fieldName != null && fieldValue != null) {
             HQL += " and model." + fieldName + " like '" + fieldValue.trim() + "'";
         }

@@ -9,6 +9,20 @@
         <div class="row-fluid">
             <div class="span12">
                 <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">       
+                    
+                    <div class="control-group">
+                        <h:outputLabel  value="#{questMSG.slcCategory}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+                        <div class="controls">
+                            <h:selectOneMenu required="true" requiredMessage="#{commonMSG.emptyField}" id="reservCategory" value="#{reservationView.categoryId}">
+                                <f:selectItem itemLabel="#{questMSG.slcCategory}" itemValue="-1"/>
+                                <f:selectItems value="#{reservationView.categoryList}" var="resCat" itemLabel="#{resCat.categoryTitle}" itemValue="#{resCat.id}"/>
+                                <p:ajax event="change" listener="#{reservationView.onCategoryLoad()}" update="form"/>
+                            </h:selectOneMenu>
+                            <span class="help-inline">
+                                <p:message for="reservCategory"/>
+                            </span>
+                        </div>
+                    </div>
 
                     <div class="control-group">
                         <h:outputLabel value="#{doctorMSG.slcDoctor}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
@@ -35,19 +49,7 @@
                             </p:autoComplete>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <h:outputLabel  value="#{questMSG.slcCategory}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
-                        <div class="controls">
-                            <h:selectOneMenu required="true" requiredMessage="#{commonMSG.emptyField}" id="reservCategory" value="#{reservationView.categoryId}">
-                                <f:selectItem itemLabel="#{questMSG.slcCategory}" itemValue="-1"/>
-                                <f:selectItems value="#{reservationView.categoryList}" var="resCat" itemLabel="#{resCat.categoryTitle}" itemValue="#{resCat.id}"/>
-                                <p:ajax event="change" listener="#{reservationView.onCategoryLoad()}" update="form"/>
-                            </h:selectOneMenu>
-                            <span class="help-inline">
-                                <p:message for="reservCategory"/>
-                            </span>
-                        </div>
-                    </div>
+
                     <div class="control-group">
                         <h:outputLabel  value="#{reservationMSG.reservationType}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
                         <div class="controls">

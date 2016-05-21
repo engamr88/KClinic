@@ -84,11 +84,11 @@ public class DoctorView extends ViewAbstract<DoctorModelDAO> {
     }
     
     public boolean validate() {
-        if (!dao.checkDuplication("doctorId",
+        if (!dao.checkDuplication("userId",
                 dao.getModelWrapper().getModel().getUserId(),
-                "doctorUserName",
+                "userName",
                 dao.getModelWrapper().getModel().getUserName(),
-                null, "Doctor")) {
+                null, "User")) {
             CommonUtil.ViewValidationMessage("form:doctorName", FacesMessage.SEVERITY_ERROR, "INFO: ", res.getString("doctorExisted"));
             return false;
         }

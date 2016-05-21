@@ -9,10 +9,11 @@
         <div class="row-fluid">
             <div class="span12">
                 <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+
                     <div class="tabbable #{localeBean.dirction=='RTL'?'tabs-right':'tabs-left'}">
                         <ul class="nav nav-tabs" id="myTab3">
                             <li class="active">
-                                <a data-toggle="tab" href="#home3">
+                                <a data-toggle="tab" href="#home3" >
                                     <i class="pink icon-dashboard bigger-110"></i>
                                     #{reservationMSG.title}
                                 </a>
@@ -20,7 +21,7 @@
 
                             <li>
                                 <a data-toggle="tab" href="#profile3">
-                                    <i class="blue icon-user bigger-110"></i>
+                                    <i class="blue icon-user bigger-110" ></i>
 
                                     #{patientMSG.title}
                                 </a>
@@ -37,7 +38,7 @@
                             <div id="home3" class="tab-pane in active">
                                 <ui:include src="reservation/reservationIndex.xhtml"/>
                             </div>
-                            
+
                         </div>
                     </div>
                     <p:dialog closable="false"  modal="true" draggable="false" resizable="false" widgetVar="confirmation" header="#{commonMSG.deleteConfirm}" >
@@ -65,7 +66,10 @@
                             </p:panelGrid>
                         </f:facet>
                     </p:dialog>
-
+<!--                    <script type="text/javascript" 
+                            src="StyleSelector.js?ln=js">
+                    </script>-->
+                    <!--<h:outputScript library="js" name="/StyleSelector.js" target="body" />-->
                 </h:form>
             </div>
         </div>

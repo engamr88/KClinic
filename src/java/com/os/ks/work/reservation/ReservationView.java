@@ -11,6 +11,8 @@ import com.os.ks.work.doctor.DoctorModelWrapper;
 import com.os.ks.work.patient.PatientModelDAO;
 import com.os.ks.work.patient.PatientModelWrapper;
 import com.os.ks.work.priceList.PriceListModelDAO;
+import com.os.ks.work.user.UserModelDAO;
+import com.os.ks.work.user.UserModelWrapper;
 import com.os.models.Category;
 import com.os.models.Patient;
 import com.os.models.PriceList;
@@ -35,6 +37,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.hibernate.Criteria;
@@ -48,7 +51,7 @@ import org.primefaces.context.RequestContext;
  * @author mohamed
  */
 @ManagedBean(name = "reservationView")
-@ViewScoped
+@SessionScoped
 public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 
     private Date cal;
@@ -63,6 +66,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
     private List<DoctorModelWrapper> doctorList = new ArrayList<>();
     private List<CategoryModelWrapper> categoryList = new ArrayList<>();
     private Date today;
+    private boolean showCalendarStyle;
 
     public ReservationView() {
         super(new ReservationModelDAO(), "com.os.ks.work.reservation.messages.Reservation");
@@ -81,6 +85,12 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         doctorList = new DoctorModelDAO().doctorWrapperList();
         categoryList = new CategoryModelDAO().loadCategoryWrapperList();
         cal = new Date();
+        showCalendarStyle = true;
+    }
+
+    public void changeStyle(boolean status) {
+        showCalendarStyle = status;
+        System.out.println("showCalendarStyle :: "+showCalendarStyle);
     }
 
     public void onCategoryLoad() {
@@ -157,13 +167,17 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         dao.getModelWrapper().getModel().setDoctor(doctor);
         dao.getModelWrapper().getModel().setPriceList(price);
         dao.getModelWrapper().getModel().setReservationDate(new Date());
-        if (reservationList.isEmpty()) {
+        if (reservationList != null && reservationList.isEmpty()) {
             dao.getModelWrapper().getModel().setReservationNumber(1);
         } else {
             int temp = 0;
-            for (Reservation reserv : reservationList) {
-                if (reserv.getReservationNumber() > temp) {
-                    temp = reserv.getReservationNumber();
+            if (reservationList != null) {
+                for (Reservation reserv : reservationList) {
+                    if (reserv.getDoctor().getUserId().equals(doctorId)) {
+                        if (reserv.getReservationNumber() > temp) {
+                            temp = reserv.getReservationNumber();
+                        }
+                    }
                 }
             }
             dao.getModelWrapper().getModel().setReservationNumber(temp + 1);
@@ -209,12 +223,16 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 //            return false;
 //        }
         System.out.println("selectedPatient.getId():: " + selectedPatient.getId());
+        System.out.println("reservationList:: " + reservationList);
         if (selectedPatient.getId() != null) {
-            System.out.println("Entered selecting patient valid");
-            for (Reservation reserv : reservationList) {
-                if (reserv.getPatient().getPatientId().equals(selectedPatient.getId())) {
-                    CommonUtil.ViewValidationMessage("form:customPojo", FacesMessage.SEVERITY_ERROR, "INFO: ", res.getString("alreadyReserved"));
-                    return false;
+            if (reservationList != null && !reservationList.isEmpty()) {
+                System.out.println("Entered selecting patient valid");
+                System.out.println("reservationList.size(): " + reservationList.size());
+                for (Reservation reserv : reservationList) {
+                    if (reserv.getPatient().getPatientId().equals(selectedPatient.getId())) {
+                        CommonUtil.ViewValidationMessage("form:customPojo", FacesMessage.SEVERITY_ERROR, "INFO: ", res.getString("alreadyReserved"));
+                        return false;
+                    }
                 }
             }
         }
@@ -249,19 +267,19 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
                 dao.update();
                 temp++;
             }
-            
+
         } else if (reservationList.get(reservationList.size() - 1).getReservationId().equals(reservation.getReservationId())) { // get last
             dao.getModelWrapper().setModel(reservation);
             dao.delete();
         } else {
-            int temp=reservation.getReservationNumber();
-            List<Reservation>restReservList = new ArrayList<>();
-            for(Reservation reserv:reservationList){
-                if(reserv.getReservationNumber()>temp){
+            int temp = reservation.getReservationNumber();
+            List<Reservation> restReservList = new ArrayList<>();
+            for (Reservation reserv : reservationList) {
+                if (reserv.getReservationNumber() > temp) {
                     restReservList.add(reserv);
                 }
             }
-            for(Reservation restReserv:restReservList){
+            for (Reservation restReserv : restReservList) {
                 restReserv.setReservationNumber(temp);
                 dao.getModelWrapper().setModel(restReserv);
                 dao.update();
@@ -372,6 +390,14 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
 
     public void setToday(Date today) {
         this.today = today;
+    }
+
+    public boolean isShowCalendarStyle() {
+        return showCalendarStyle;
+    }
+
+    public void setShowCalendarStyle(boolean showCalendarStyle) {
+        this.showCalendarStyle = showCalendarStyle;
     }
 
 }

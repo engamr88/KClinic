@@ -40,13 +40,13 @@ public class ReservationModelDAO extends AbstractDAOWrapper<ReservationModelWrap
                 + " (model.reservationNumber) as reservationNumber, "
                 + " (priceList.priceType) as priceType, "
                 + " (priceList.priceAmount) as priceAmount, "
-                + " (doctor.doctorFullName) as doctorFullName "
+                + " (doctor.userFullName) as doctorFullName "
                 + ") "
                 + " FROM Reservation model "
                 + "left join model.category category "
                 + "left join model.patient patient "
                 + "left join model.priceList priceList "
-                + "left join model.doctor doctor";
+                + "left join model.doctor user";
         HQL += createSearchCrti(orderBy, orderMode, filters);
         return HQL;
     }

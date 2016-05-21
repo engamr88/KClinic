@@ -28,10 +28,10 @@ public class DetectionModelDAO extends AbstractDAOWrapper<DetectionModelWrapper>
                 + " (model.detectionId) as id , "
                 + " (patient.patientFullName) as patientFullName,"
                 + " (model.note) as note,"
-                + " (doctor.doctorFullName) as doctorFullName,"
+                + " (doctor.userFullName) as doctorFullName,"
                 + " (model.extraFees) as extraFees "
                 + ") "
-                + " FROM Detection model left join fetch model.patient patient left join model.doctor doctor";
+                + " FROM Detection model left join fetch model.patient patient left join model.user doctor";
         HQL += createSearchCrti(orderBy, orderMode, filters);
         return HQL;
     }
@@ -49,12 +49,12 @@ public class DetectionModelDAO extends AbstractDAOWrapper<DetectionModelWrapper>
 
     @Override
     protected String createLoadHQL(Integer id) {
-        String HQL = "FROM Detection model left join fetch model.patient patient left join fetch model.doctor doctor where model.detectionId= " + id;
+        String HQL = "FROM Detection model left join fetch model.patient patient left join fetch model.user doctor where model.detectionId= " + id;
         return HQL;
     }
 
     public Detection loadDetectionById(Integer id) {
-        String HQL = "FROM Detection model left join fetch model.patient patient left join fetch model.doctor doctor where model.detectionId= " + id;
+        String HQL = "FROM Detection model left join fetch model.patient patient left join fetch model.user doctor where model.detectionId= " + id;
         return (Detection) uniqueResult(HQL);
     }
 

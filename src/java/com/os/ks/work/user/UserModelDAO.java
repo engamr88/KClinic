@@ -59,7 +59,7 @@ public class UserModelDAO extends AbstractDAOWrapper<UserModelWrapper> {
 
     @Override
     protected String createListHQL(String orderBy, String orderMode, Map filters) {
-     
+
         String HQL = "SELECT "
                 + " new " + UserModelWrapper.class.getName() + "("
                 + " (model.userId) as id , "
@@ -84,6 +84,7 @@ public class UserModelDAO extends AbstractDAOWrapper<UserModelWrapper> {
         HQL += createSearchCrti(null, null, filters);
         return HQL;
     }
+
 
     @Override
     protected String createLoadHQL(Integer id) {

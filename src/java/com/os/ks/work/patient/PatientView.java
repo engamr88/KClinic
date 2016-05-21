@@ -9,6 +9,8 @@ import com.os.ks.work.category.CategoryModelWrapper;
 import com.os.ks.work.quest.QuestModelDAO;
 import com.os.ks.work.questAnswer.QuestAnswerModelDAO;
 import com.os.ks.work.questAnswer.QuestAnswerModelWrapper;
+import com.os.ks.work.reservation.ReservationView;
+import com.os.ks.work.user.LoginModelView;
 import com.os.models.Category;
 import com.os.models.Patient;
 import com.os.models.Quest;
@@ -24,6 +26,8 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -43,6 +47,12 @@ public class PatientView extends ViewAbstract<PatientModelDAO> {
         super(new PatientModelDAO(), "com.os.ks.work.patient.messages.Patient");
         setDatablesaveMergeVisiable(true);
         categoryList = new CategoryModelDAO().loadCategoryWrapperList();
+        HttpSession httpsession = (HttpSession) FacesContext.getCurrentInstance().
+                getExternalContext().getSession(false);
+        ReservationView reservationView = (ReservationView) httpsession.getAttribute("reservationView");
+        if (reservationView != null) {
+            reservationView.setShowCalendarStyle(false);
+        }
     }
 
     public void onCategorySelection() {
@@ -93,7 +103,7 @@ public class PatientView extends ViewAbstract<PatientModelDAO> {
         super.clearForm(); //To change body of generated methods, choose Tools | Templates.
         categoryId = -1;
         patientQuestAnsWrapperList = new ArrayList<>();
-        selectedPatient=new Patient();
+        selectedPatient = new Patient();
     }
 
     private boolean validate() {
@@ -158,7 +168,7 @@ public class PatientView extends ViewAbstract<PatientModelDAO> {
 
     @Override
     public void update() {
-          if (validateUpdate()) {
+        if (validateUpdate()) {
             if (dao.saveOrUpdate()) {
                 CommonUtil.ViewGloabalMessage(FacesMessage.SEVERITY_INFO, "INFO: ", commonRes.getString("updateSuccessfulMsg"));
             } else {
@@ -203,8 +213,8 @@ public class PatientView extends ViewAbstract<PatientModelDAO> {
         dao.loadModelWrapper();
         patientQuestAnswerList = new QuestAnswerModelDAO().loadQuestAnswerByPatientId(dao.getModelWrapper().getModel().getPatientId());
         QuestAnswerModelDAO questAnswerDao;
-        for(QuestAnswer questAnswer:patientQuestAnswerList){
-            questAnswerDao=new QuestAnswerModelDAO();
+        for (QuestAnswer questAnswer : patientQuestAnswerList) {
+            questAnswerDao = new QuestAnswerModelDAO();
             questAnswerDao.setModelWrapper(new QuestAnswerModelWrapper());
             questAnswerDao.getModelWrapper().setModel(questAnswer);
             questAnswerDao.delete();

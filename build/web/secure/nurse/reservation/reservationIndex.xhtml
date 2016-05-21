@@ -10,17 +10,18 @@
         </h1>
     </div>
     <h:panelGroup id="reservationGroup">
-        <style>
-            .ui-datepicker{
+        <!--<h:panelGroup >-->
+        <style >
+            .test .ui-datepicker {
                 width: 100%;
             }
-            .ui-datepicker table {
+            .test1 .ui-datepicker table {
                 width: 100%;
                 font-size: 1.4em;
                 border-collapse: collapse;
                 margin: 0 0 .4em;
             }
-            .ui-datepicker td span, .ui-datepicker td a {
+            .test2 .ui-datepicker td span,.test2 .ui-datepicker td a {
                 display: block;
                 padding: .2em;
                 text-align: right;
@@ -29,7 +30,13 @@
                 font-weight: bold;
                 font-size: x-large;
             }
+             .ui-datepicker {
+                width: 23em;
+                padding: .2em .2em 0;
+                display: none;
+            }
         </style>
+        <!--</h:panelGroup>-->
         <div class="row-fluid">
             <h:panelGroup id="listData">
                 <div class="span6" style="border: 1px solid;">
@@ -42,35 +49,44 @@
                         </div>
                     </div>
                     <p:commandLink disabled="#{reservationView.cal.date lt reservationView.today.date}" id="addResevation" styleClass="btn btn-success btn-block" value="#{reservationMSG.addReservation}" onclick="window.location.href = 'newReservation/newReservstionIndex.xhtml?cal=#{reservationView.cal}';"/>
-                    <ui:repeat value="#{reservationView.reservationList}" var="reservation">
-                        <div class="row">
-                            <div class="span6">
-                                <p:commandLink value="#{reservationMSG.enterDone}" styleClass="btn btn-success"/>
-                                <p:commandLink value="#{reservationMSG.enterPostponed}"
-                                               styleClass="btn btn-warning"
-                                               actionListener="#{reservationView.delayReservation(reservation)}"
-                                               update="form:listData"
-                                               disabled="#{reservationView.reservationList.indexOf(reservation)==reservationView.reservationList.size()-1}"/>
-                                <p:commandLink value="#{commonMSG.cancel}"
-                                               styleClass="btn btn-danger"
-                                               actionListener="#{reservationView.cancelReservation(reservation)}"
-                                               update="form:listData"/>
-                            </div>
-                            <div class="span6">
-                                <div class="control-group">
-                                    <h:outputLabel value=" #{reservation.reservationNumber}." styleClass="control-label" style="font-weight: bold;font-size: large;"/>
-                                    <div class="controls">
-                                        <h:outputLabel value="#{reservation.patient.patientFullName}" style="padding-top: 5px;font-weight: bold;font-size: large;"/>
-                                    </div>
-                                </div>
-                            </div>
 
-                        </div>
-                    </ui:repeat>
+                    <p:tabView value="#{reservationView.doctorList}" var="doc">
+                        <p:tab title="#{doc.doctorFullName}">
+                            <ui:repeat value="#{reservationView.reservationList}" var="reservation">
+                                <h:panelGroup rendered="#{reservation.doctor.userId==doc.id}">
+                                    <div class="row">
+                                        <div class="span6">
+                                            <p:commandLink value="#{reservationMSG.enterDone}" styleClass="btn btn-success"/>
+                                            <p:commandLink value="#{reservationMSG.enterPostponed}"
+                                                           styleClass="btn btn-warning"
+                                                           actionListener="#{reservationView.delayReservation(reservation)}"
+                                                           update="form:listData"
+                                                           disabled="#{reservationView.reservationList.indexOf(reservation)==reservationView.reservationList.size()-1}"/>
+                                            <p:commandLink value="#{commonMSG.cancel}"
+                                                           styleClass="btn btn-danger"
+                                                           actionListener="#{reservationView.cancelReservation(reservation)}"
+                                                           update="form:listData"/>
+                                        </div>
+                                        <div class="span6">
+                                            <div class="control-group">
+                                                <h:outputLabel value=" #{reservation.reservationNumber}." styleClass="control-label" style="font-weight: bold;font-size: large;"/>
+                                                <div class="controls">
+                                                    <h:outputLabel value="#{reservation.patient.patientFullName}" style="padding-top: 5px;font-weight: bold;font-size: large;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </h:panelGroup>
+                            </ui:repeat>
+                        </p:tab>
+
+                    </p:tabView>
+
                 </div>
             </h:panelGroup>
             <div class="span6">
-                <p:calendar id="inline" style="width: 100%"  mode="inline" value="#{reservationView.cal}" >
+                <p:calendar id="inline" styleClass="test test1 test2" style="width: 100%"  mode="inline" value="#{reservationView.cal}" >
                     <p:ajax event="dateSelect" listener="#{reservationView.onDateReservations()}" update="reservationGroup" />
                 </p:calendar>
             </div>
@@ -87,4 +103,12 @@
             timeOnlyTitle: 'الوقت فقط', timeText: 'الوقت', hourText: 'ساعة', minuteText: 'دقيقة', secondText: 'ثانية',
             ampm: false, month: 'الشهر', week: 'الأسبوع', day: 'اليوم', allDayText: 'سا ئراليوم'};
     </script>
+    <!--    <script type="text/javascript" 
+                src="StyleSelector.js?ln=js">
+        </script>
+        <script type="text/javascript">
+            function check() {
+                return true;
+            }
+        </script>-->
 </h:panelGroup>

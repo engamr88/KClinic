@@ -19,7 +19,7 @@
     </div>
     <div class="row-fluid">
         <div class="span12">
-
+            
             <p:messages id="messages" showDetail="true"  autoUpdate="true" closable="true" globalOnly="true"/> 
             <div class="row" style="width: 100%">
                 <div class="span6">
@@ -147,7 +147,7 @@
                     <div class="control-group">
                         <h:outputLabel value="#{patientMSG.patientBirthdate}" styleClass="control-label"/>
                         <div class="controls">
-                            <p:calendar value="#{patientView.DAO.modelWrapper.model.patientBirthdate}" pattern="dd/MM/yyyy"
+                            <p:calendar value="#{patientView.DAO.modelWrapper.model.patientBirthdate}" pattern="dd/MM/yyyy" 
                                         id="patientBirthdate"/>
                             <span class="help-inline">
                                 <p:message for="patientBirthdate"/>
@@ -167,7 +167,7 @@
                             </span>
                         </div>
                     </div>
-                    
+
                     <div class="control-group">
                         <h:outputLabel value="#{patientMSG.patientJob}" styleClass="control-label"/>
                         <div class="controls">
