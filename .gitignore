@@ -1,5 +1,8 @@
 build/*
 nbproject/*
-dist/*
+dist/KClinic.war
 nbproject/private/*
-nbproject/private/private.properties
+nbproject/*
+build/web/*
+build/web/resources/*
+build/web/resources/images/*
