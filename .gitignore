@@ -6,3 +6,4 @@ nbproject/*
 build/web/*
 build/web/resources/*
 build/web/resources/images/*
+*.war

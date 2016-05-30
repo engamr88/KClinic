@@ -1,41 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-    <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
-    <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">root</property>
-    <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property>
-    <property name="hibernate.connection.autocommit">false</property>
-    <property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.show_sql">true</property>
-    <property name="hibernate.format_sql">true</property>
-    <property name="hibernate.jdbc.batch_size">50</property>
-    <property name="hibernate.c3p0.max_size">1</property>
-    <property name="hibernate.c3p0.min_size">0</property>
-    <property name="hibernate.c3p0.timeout">5000</property>
-    <property name="hibernate.c3p0.max_statements">1000</property>
-    <property name="hibernate.c3p0.idle_test_period">300</property>
-    <property name="hibernate.c3p0.acquire_increment">1</property>
-    <mapping resource="com/os/models/Prescription.hbm.xml"/>
-    <mapping resource="com/os/models/Session.hbm.xml"/>
-    <mapping resource="com/os/models/CaseStudy.hbm.xml"/>
-    <mapping resource="com/os/models/Medication.hbm.xml"/>
-    <mapping resource="com/os/models/Form.hbm.xml"/>
-    <mapping resource="com/os/models/Quest.hbm.xml"/>
-    <mapping resource="com/os/models/PriceList.hbm.xml"/>
-    <mapping resource="com/os/models/Dose.hbm.xml"/>
-    <mapping resource="com/os/models/Patient.hbm.xml"/>
-    <mapping resource="com/os/models/Concentration.hbm.xml"/>
-    <mapping resource="com/os/models/Detection.hbm.xml"/>
-    <mapping resource="com/os/models/Reservation.hbm.xml"/>
-    <mapping resource="com/os/models/User.hbm.xml"/>
-    <mapping resource="com/os/models/QuestAnswer.hbm.xml"/>
-    <mapping resource="com/os/models/DetectionStudy.hbm.xml"/>
-    <mapping resource="com/os/models/Category.hbm.xml"/>
-  </session-factory>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">root</property>
+        <!--    <property name="hibernate.connection.url">jdbc:mysql://127.11.224.130:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
+        <property name="hibernate.connection.username">adminBDNLAQ3</property>
+        <property name="hibernate.connection.password">7REdsYkdAKA4</property>-->
+        <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.connection.autocommit">false</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <!--    <property name="hibernate.jdbc.batch_size">50</property>
+        <property name="hibernate.c3p0.max_size">1</property>
+        <property name="hibernate.c3p0.min_size">0</property>
+        <property name="hibernate.c3p0.timeout">5000</property>
+        <property name="hibernate.c3p0.max_statements">1000</property>
+        <property name="hibernate.c3p0.idle_test_period">300</property>
+        <property name="hibernate.c3p0.acquire_increment">1</property>-->
+        <!-- c3p0 Connection Pool Properties -->
+        <property name="initialPoolSize">10</property>
+        <property name="minPoolSize" >5</property>
+        <property name="maxPoolSize" >25</property>
+        <property name="acquireRetryAttempts">10</property>
+        <property name="acquireIncrement">5</property>
+        <property name="idleConnectionTestPeriod">3600</property>
+        <property name="maxIdleTime">19800</property>
+        <property name="maxConnectionAge">21600</property>
+        <property name="preferredTestQuery">SELECT 1</property>
+        <property name="testConnectionOnCheckin">false</property>
+
+        <mapping resource="com/os/models/Prescription.hbm.xml"/>
+        <mapping resource="com/os/models/Session.hbm.xml"/>
+        <mapping resource="com/os/models/CaseStudy.hbm.xml"/>
+        <mapping resource="com/os/models/Medication.hbm.xml"/>
+        <mapping resource="com/os/models/Form.hbm.xml"/>
+        <mapping resource="com/os/models/Quest.hbm.xml"/>
+        <mapping resource="com/os/models/PriceList.hbm.xml"/>
+        <mapping resource="com/os/models/Dose.hbm.xml"/>
+        <mapping resource="com/os/models/Patient.hbm.xml"/>
+        <mapping resource="com/os/models/Concentration.hbm.xml"/>
+        <mapping resource="com/os/models/Detection.hbm.xml"/>
+        <mapping resource="com/os/models/Reservation.hbm.xml"/>
+        <mapping resource="com/os/models/User.hbm.xml"/>
+        <mapping resource="com/os/models/QuestAnswer.hbm.xml"/>
+        <mapping resource="com/os/models/DetectionStudy.hbm.xml"/>
+        <mapping resource="com/os/models/Category.hbm.xml"/>
+    </session-factory>
 </hibernate-configuration>
