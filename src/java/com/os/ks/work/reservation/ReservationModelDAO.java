@@ -63,26 +63,34 @@ public class ReservationModelDAO extends AbstractDAOWrapper<ReservationModelWrap
     }
 
     public List<Reservation> loadReservationList(Date date) {
-        System.out.println("Date before :: "+date);
+        System.out.println("Date before :: " + date);
+        Calendar now = Calendar.getInstance();
+        System.out.println("now.get(Calendar.HOUR):: " + now.get(Calendar.HOUR));
         Calendar calBefore = Calendar.getInstance();
         Calendar calAfter = Calendar.getInstance();
         calAfter.setTime(date);
         calBefore.setTime(date);
- 
+
         calBefore.set(Calendar.HOUR, 7);
         calBefore.set(Calendar.AM_PM, Calendar.AM);
         calBefore.set(Calendar.MINUTE, 0);
         calBefore.set(Calendar.SECOND, 0);
+        if (now.get(Calendar.HOUR) >= 0 && now.get(Calendar.HOUR) < 7 && now.get(Calendar.AM_PM) == Calendar.AM) {
+            calBefore.add(Calendar.DAY_OF_MONTH, -1);
+        }
         Date startDate = calBefore.getTime();
-        
+
         calAfter.set(Calendar.HOUR, 3);
         calAfter.set(Calendar.MINUTE, 0);
         calAfter.set(Calendar.SECOND, 0);
         calAfter.set(Calendar.AM_PM, Calendar.AM);
-        calAfter.add(Calendar.DAY_OF_MONTH,1);
+        if (now.get(Calendar.HOUR) >= 0 && now.get(Calendar.HOUR) < 7 && now.get(Calendar.AM_PM) == Calendar.AM) {
+
+        } else {
+            calAfter.add(Calendar.DAY_OF_MONTH, 1);
+        }
         Date endDate = calAfter.getTime();
-        
-        
+
         String startDateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startDate);
         String endDateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
         String hql = "FROM Reservation model "
@@ -91,6 +99,48 @@ public class ReservationModelDAO extends AbstractDAOWrapper<ReservationModelWrap
                 + "left join fetch model.priceList priceList "
                 + "left join fetch model.doctor doctor where model.archive=0 and "
                 + "(model.reservationDate >= '" + startDateString + "' and model.reservationDate <='" + endDateString + "')"
+                + " order by model.reservationNumber";
+        return list(hql);
+    }
+
+    public List<Reservation> loadReservationList(Date date, Integer doctorId) {
+        System.out.println("Date before :: " + date);
+        Calendar now = Calendar.getInstance();
+        Calendar calBefore = Calendar.getInstance();
+        Calendar calAfter = Calendar.getInstance();
+        calAfter.setTime(date);
+        calBefore.setTime(date);
+
+        calBefore.set(Calendar.HOUR, 7);
+        calBefore.set(Calendar.AM_PM, Calendar.AM);
+        calBefore.set(Calendar.MINUTE, 0);
+        calBefore.set(Calendar.SECOND, 0);
+        if (now.get(Calendar.HOUR) >= 0 && now.get(Calendar.HOUR) < 7 && now.get(Calendar.AM_PM) == Calendar.AM) {
+            calBefore.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        Date startDate = calBefore.getTime();
+
+        calAfter.set(Calendar.HOUR, 3);
+        calAfter.set(Calendar.MINUTE, 0);
+        calAfter.set(Calendar.SECOND, 0);
+        calAfter.set(Calendar.AM_PM, Calendar.AM);
+        if (now.get(Calendar.HOUR) >= 0 && now.get(Calendar.HOUR) < 7 && now.get(Calendar.AM_PM) == Calendar.AM) {
+
+        } else {
+            calAfter.add(Calendar.DAY_OF_MONTH, 1);
+        }
+//        }
+        Date endDate = calAfter.getTime();
+
+        String startDateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(startDate);
+        String endDateString = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(endDate);
+        String hql = "FROM Reservation model "
+                + "left join fetch model.category category "
+                + "left join fetch model.patient patient "
+                + "left join fetch model.priceList priceList "
+                + "left join fetch model.doctor doctor where model.archive=0 and "
+                + "(model.reservationDate >= '" + startDateString + "' and model.reservationDate <='" + endDateString + "') "
+                + "and doctor.userId=" + doctorId
                 + " order by model.reservationNumber";
         return list(hql);
     }

@@ -58,6 +58,14 @@ public class DetectionModelDAO extends AbstractDAOWrapper<DetectionModelWrapper>
         return (Detection) uniqueResult(HQL);
     }
 
+    public Detection checkDetectionCreatedFromReservation(Integer reservationId) {
+        String HQL = "FROM Detection model where model.archive =0 and model.patient.patientId = "
+                + "(select patient.patientId from "
+                + "Reservation reserv left join  reserv.patient patient "
+                + "where reserv.reservationId=" + reservationId + ")";
+        return (Detection) uniqueResult(HQL);
+    }
+
     @Override
     public boolean checkDuplication(String idName, Integer idvalue, String fieldName, String fieldValue, String extraCondition, String modelClass) {
         return super.checkDuplication(idName, idvalue, fieldName, fieldValue, extraCondition, modelClass); //To change body of generated methods, choose Tools | Templates.

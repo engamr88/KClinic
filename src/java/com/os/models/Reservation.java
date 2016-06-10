@@ -17,28 +17,12 @@ public class Reservation implements java.io.Serializable {
     private Integer reservationNumber;
     private User doctor;
     private boolean archive;
+    private boolean current;
 
     public Reservation() {
     }
 
-    public Reservation(Patient patient, Integer reservationType, Date reservationDate, Integer reservationNumber) {
-        this.patient = patient;
-        this.reservationType = reservationType;
-        this.reservationDate = reservationDate;
-        this.reservationNumber = reservationNumber;
-    }
-
-    public Reservation(Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, User doctor) {
-        this.category = category;
-        this.patient = patient;
-        this.priceList = priceList;
-        this.reservationType = reservationType;
-        this.reservationDate = reservationDate;
-        this.reservationNumber = reservationNumber;
-        this.doctor = doctor;
-    }
-
-    public Reservation(Integer reservationId, Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, User doctor, boolean archive) {
+    public Reservation(Integer reservationId, Category category, Patient patient, PriceList priceList, Integer reservationType, Date reservationDate, Integer reservationNumber, User doctor, boolean archive, boolean current) {
         this.reservationId = reservationId;
         this.category = category;
         this.patient = patient;
@@ -48,6 +32,7 @@ public class Reservation implements java.io.Serializable {
         this.reservationNumber = reservationNumber;
         this.doctor = doctor;
         this.archive = archive;
+        this.current = current;
     }
 
     public Integer getReservationId() {
@@ -121,5 +106,13 @@ public class Reservation implements java.io.Serializable {
     public void setArchive(boolean archive) {
         this.archive = archive;
     }
-    
+
+    public boolean isCurrent() {
+        return current;
+    }
+
+    public void setCurrent(boolean current) {
+        this.current = current;
+    }
+
 }

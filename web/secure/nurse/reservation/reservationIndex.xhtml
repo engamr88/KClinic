@@ -67,7 +67,6 @@
                                 <h:panelGroup rendered="#{reservation.doctor.userId==doc.id}">
                                     <div class="row">
                                         <div class="span6">
-                                            <p:commandLink value="#{reservationMSG.enterDone}" styleClass="btn btn-success"/>
                                             <p:commandLink value="#{reservationMSG.enterPostponed}"
                                                            styleClass="btn btn-warning"
                                                            actionListener="#{reservationView.delayReservation(reservation)}"

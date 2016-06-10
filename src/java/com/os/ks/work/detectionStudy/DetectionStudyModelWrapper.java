@@ -4,7 +4,6 @@
  */
 package com.os.ks.work.detectionStudy;
 
-
 import com.os.models.CaseStudy;
 import com.os.models.Detection;
 import com.os.models.DetectionStudy;
@@ -21,11 +20,19 @@ public class DetectionStudyModelWrapper extends AbstractModelWrapper<DetectionSt
         initModel();
     }
     private Integer id;
-     private String caseStudyName;
+    private String caseStudyName;
+    private Integer detectionId;
+    private Integer caseStudeyId;
 
     public DetectionStudyModelWrapper(Integer id, String caseStudyName) {
         this.id = id;
         this.caseStudyName = caseStudyName;
+    }
+
+    public DetectionStudyModelWrapper(Integer id,Integer caseStudeyId, String caseStudyName) {
+        this.id = id;
+        this.caseStudyName = caseStudyName;
+        this.caseStudeyId = caseStudeyId;
     }
 
     @Override
@@ -54,6 +61,20 @@ public class DetectionStudyModelWrapper extends AbstractModelWrapper<DetectionSt
         this.caseStudyName = caseStudyName;
     }
 
-   
-   
+    public Integer getDetectionId() {
+        return detectionId;
+    }
+
+    public void setDetectionId(Integer detectionId) {
+        this.detectionId = detectionId;
+    }
+
+    public Integer getCaseStudeyId() {
+        return caseStudeyId;
+    }
+
+    public void setCaseStudeyId(Integer caseStudeyId) {
+        this.caseStudeyId = caseStudeyId;
+    }
+
 }

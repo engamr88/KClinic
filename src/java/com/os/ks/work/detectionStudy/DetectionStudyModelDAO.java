@@ -4,12 +4,12 @@
  */
 package com.os.ks.work.detectionStudy;
 
-
 import com.os.models.CaseStudy;
 import com.os.models.Detection;
 import com.os.models.DetectionStudy;
 import com.os.models.Patient;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,6 +55,17 @@ public class DetectionStudyModelDAO extends AbstractDAOWrapper<DetectionStudyMod
     public DetectionStudy loadDetectionStudyById(Integer id) {
         String HQL = "FROM DetectionStudy model left join fetch model.caseStudy caseStudy where model.detectionStudyId= " + id;
         return (DetectionStudy) uniqueResult(HQL);
+    }
+
+    public List<DetectionStudyModelWrapper> detectionStudyList(int detectionId) {
+        String HQL = "SELECT "
+                + " new " + DetectionStudyModelWrapper.class.getName() + "("
+                + " (model.detectionStudyId) as id , "
+                + " (caseStudy.caseStudyId) as caseStudeyId,"
+                + " (caseStudy.caseStudyName) as caseStudyName "
+                + ") "
+                + "FROM DetectionStudy model left join model.caseStudy caseStudy where model.detection.detectionId=" + detectionId;
+        return list(HQL);
     }
 
     @Override

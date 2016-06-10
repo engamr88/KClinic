@@ -5,7 +5,7 @@
 package com.os.ks.work.session;
 
 import com.os.models.Detection;
-import com.os.models.Session;
+import com.os.models.DetectionSession;
 import com.os.util.hjpf.wrapper.AbstractModelWrapper;
 import java.util.Date;
 
@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author egyptianeagle
  */
-public class SessionModelWrapper extends AbstractModelWrapper<Session> {
+public class SessionModelWrapper extends AbstractModelWrapper<DetectionSession> {
 
     public SessionModelWrapper() {
         initModel();
@@ -33,7 +33,7 @@ public class SessionModelWrapper extends AbstractModelWrapper<Session> {
     }
 
     @Override
-    public Session getModel() {
+    public DetectionSession getModel() {
         return model;
     }
 
@@ -43,7 +43,7 @@ public class SessionModelWrapper extends AbstractModelWrapper<Session> {
     }
 
     private void initModel() {
-        Session session = new Session();
+        DetectionSession session = new DetectionSession();
         session.setDetection(new Detection());
         setModel(session);
     }

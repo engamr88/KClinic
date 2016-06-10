@@ -5,8 +5,9 @@
 package com.os.ks.work.session;
 
 import com.os.models.Detection;
-import com.os.models.Session;
+import com.os.models.DetectionSession;
 import com.os.util.hjpf.dao.AbstractDAOWrapper;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -54,9 +55,14 @@ public class SessionModelDAO extends AbstractDAOWrapper<SessionModelWrapper> {
         return HQL;
     }
 
-    public Session loadSessionById(Integer id) {
+    public DetectionSession loadSessionById(Integer id) {
         String HQL = "FROM Session model left join fetch model.detection detection where model.sessionId= " + id;
-        return (Session) uniqueResult(HQL);
+        return (DetectionSession) uniqueResult(HQL);
+    }
+
+    public List<DetectionSession> fetchDetectionSessions(Integer detectionId) {
+        String hql = "from DetectionSession model where model.detection.detectionId=" + detectionId;
+        return list(hql);
     }
 
     @Override
@@ -66,7 +72,7 @@ public class SessionModelDAO extends AbstractDAOWrapper<SessionModelWrapper> {
 
     @Override
     public void loadModelWrapper() {
-        Session d = (Session) load(getModelWrapper().getId());
+        DetectionSession d = (DetectionSession) load(getModelWrapper().getId());
         getModelWrapper().setModel(d);
     }
 
@@ -77,7 +83,7 @@ public class SessionModelDAO extends AbstractDAOWrapper<SessionModelWrapper> {
 
     private void initModelWrapper() {
         SessionModelWrapper sessionMW = new SessionModelWrapper();
-        sessionMW.setModel(new Session());
+        sessionMW.setModel(new DetectionSession());
         sessionMW.getModel().setDetection(new Detection());
         setModelWrapper(sessionMW);
     }

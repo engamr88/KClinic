@@ -14,5 +14,6 @@ public class CommonListReslover {
     public static final int DOCTOR_LIST = 1;
     public static final int PATIENT_LIST = 2;
     public static final int USER_LIST = 3;
+    public static final int CASE_STUDY_LIST = 4;
 //  public static final int STUDEND_LIST = 1;
 }

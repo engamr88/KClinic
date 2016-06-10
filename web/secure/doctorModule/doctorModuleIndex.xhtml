@@ -9,8 +9,78 @@
         <div class="row-fluid">
             <div class="span12">
                 <h:form id="form" styleClass="form-horizontal" enctype="multipart/form-data">
+                    <div class="span3" style="border: solid 1px;padding-top: 10px;padding-right: 10px;">
+                        <h:panelGroup rendered="#{detectionView.reservationList.size()==0}">
+                            <h:outputLabel value="#{commonMSG.noRec}"/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{detectionView.reservationList.size()>0}">
+                            <ui:repeat value="#{detectionView.reservationList}" var="reservation">
+                                <div class="row" style="#{reservation.current?'background-color: #BEDAFF;margin-left: 0px;margin-right: -10px;':'margin-left: 0px;margin-right: -10px;'}">
+                                    <span class="span6">
+                                        <p:commandButton styleClass="btn btn-success" value="#{commonMSG.done}"/>
+                                    </span>
 
-                  
+                                    <span class="span6">
+                                        <h:outputLabel value=" #{reservation.reservationNumber}. #{reservation.patient.patientFullName}"/>
+                                    </span>
+                                    <h:panelGroup rendered="#{detectionView.reservationList.indexOf(reservation) lt detectionView.reservationList.size()}">
+                                        <hr/>
+                                    </h:panelGroup>
+                                </div>
+                            </ui:repeat>
+                        </h:panelGroup>
+                    </div>
+                    <div class="span8">
+                        <div class="widget-box transparent" id="recent-box">
+                            <div class="widget-header">
+                                <div class="widget-toolbar no-border">
+                                    <ul class="nav nav-tabs" id="recent-tab">
+                                        <li class="active">
+                                            <a data-toggle="tab" href="#task-tab">#{detectionMSG.diagnose}</a>
+                                        </li>
+
+                                        <li>
+                                            <a data-toggle="tab" href="#member-tab">#{detectionMSG.patientHistory}</a>
+                                        </li>
+
+
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="widget-body">
+                                <div class="widget-main padding-4">
+                                    <div class="tab-content padding-8 overflow-visible">
+                                        <div id="task-tab" class="tab-pane active">
+                                            <ui:include src="diagnoseIndex.xhtml"/>
+                                        </div>
+
+                                        <div id="member-tab" class="tab-pane">
+
+                                        </div><!--member-tab-->
+
+                                    </div>
+                                </div><!--/widget-main-->
+                            </div><!--/widget-body-->
+                        </div><!--/widget-box-->
+
+                    </div>
+                    <p:dialog  modal="true" draggable="false" resizable="false" widgetVar="showFileDlg" header="#{detectionMSG.showFile}" >
+                        <ui:repeat value="#{detectionView.questAnswersList}" var="questAnswer">
+                            <div class="control-group">
+                                <h:outputLabel value="#{questAnswer.quest.questName}:" styleClass="control-label"/>
+                                <div class="controls">
+                                    <h:panelGroup rendered="#{questAnswer.questAnswerName==0 or questAnswer.questAnswerName==1}">
+                                        <h:outputLabel value="#{commonMSG.yes}" rendered="#{questAnswer.questAnswerName==1}"/> 
+                                        <h:outputLabel value="#{commonMSG.no}" rendered="#{questAnswer.questAnswerName==0}"/> 
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{questAnswer.questAnswerName!=0 and questAnswer.questAnswerName!=1}">
+                                        <h:outputLabel value="#{questAnswer.questAnswerName}"/>
+                                    </h:panelGroup>
+                                </div>
+                            </div>
+                        </ui:repeat>
+                    </p:dialog>
                 </h:form>
             </div>
         </div>

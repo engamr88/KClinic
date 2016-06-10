@@ -30,6 +30,9 @@
         <property name="archive">
             <column name="archive"/>
         </property>
+        <property name="current">
+            <column name="current"/>
+        </property>
         <many-to-one name="doctor" class="com.os.models.User" fetch="select">
             <column name="user_id" not-null="true" />
         </many-to-one>

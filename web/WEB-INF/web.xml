@@ -64,7 +64,7 @@
     </error-page>
     <session-config>
         <session-timeout>
-            31536000
+            40
         </session-timeout>
     </session-config>
     

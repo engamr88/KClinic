@@ -8,6 +8,8 @@ import com.os.util.HibernateUtil;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -31,6 +33,14 @@ abstract class AbstractDAO<T> {
 
     protected T uniqueResult(String hql) {
         T obj = null;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -43,12 +53,20 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return obj;
     }
 
     public Long fetchCount(String orderBy, String orderMode, Map filters) {
-
         Long count = 0L;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -60,11 +78,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return count;
     }
 
     public List<T> list(int first, int pageSize, String orderBy, String orderMode, Map filters) {
         List<T> list = null;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -92,6 +118,13 @@ abstract class AbstractDAO<T> {
 
     protected List list(String hql) {
         List list = null;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -104,11 +137,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return list;
     }
 
     protected List list(String hql, int querySize) {
         List list = null;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -125,12 +166,20 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return list;
     }
 
     protected boolean save(Object model) {
-       
+
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -143,11 +192,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return done;
     }
 
     public boolean save(List<Object> models) {
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -163,12 +220,20 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return done;
     }
 
     protected Object saveMerge(Object model) {
-       
+
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -181,11 +246,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return model;
     }
 
     protected boolean update(Object model) {
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -197,12 +270,20 @@ abstract class AbstractDAO<T> {
             ex.printStackTrace();
         } finally {
             session.close();
+
         }
         return done;
     }
 
     protected boolean executeUpdate(String hql) {
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -215,11 +296,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return done;
     }
 
     protected boolean saveOrUpdate(Object model) {
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -232,11 +321,19 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return done;
     }
 
     protected boolean delete(Object model) {
         boolean done = false;
+        HttpServletRequest httpReq = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        if (httpReq.getRequestedSessionId() != null
+                && !httpReq.isRequestedSessionIdValid()) {
+            // Session is expired
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            session.close();
+        }
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction t = session.beginTransaction();
         try {
@@ -249,6 +346,7 @@ abstract class AbstractDAO<T> {
         } finally {
             session.close();
         }
+
         return done;
     }
 }

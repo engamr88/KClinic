@@ -108,11 +108,11 @@ public class LoginModelView {
                         backupDataWithDatabase();
                         FacesContext.getCurrentInstance().getExternalContext().redirect(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath() + "/secure/landingPage/landingPage.xhtml");
                     }
-                     else if (loginedUser.getUserType() == 3) {
+                     else if (loginedUser.getUserType() == 2) {
                         loginflag = true;
                         httpsession.setAttribute("auth", true);
                         backupDataWithDatabase();
-                        FacesContext.getCurrentInstance().getExternalContext().redirect(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath() + "/secure/nurse/nurseIndex.xhtml");
+                        FacesContext.getCurrentInstance().getExternalContext().redirect(((HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest()).getContextPath() + "/secure/doctorModule/doctorModuleIndex.xhtml");
                     }
                     else if (loginedUser.getUserType() == 3) {
                         loginflag = true;

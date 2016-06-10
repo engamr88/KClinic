@@ -1,0 +1,66 @@
+<h:panelGroup id="sessionGroup" xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:p="http://primefaces.org/ui"
+              >
+    <div class="control-group">
+        <h:outputLabel styleClass="control-label" value="#{sessionMSG.sessionName}"/>
+        <div class="controls">
+            <h:inputText id="sessionName" value="#{detectionView.detectionSession.detectionSessionName}"/>
+            <span class="help-inline">
+                <p:message for="sessionName"/>
+            </span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <h:outputLabel styleClass="control-label" value="#{sessionMSG.amountPaid}"/>
+        <div class="controls">
+            <h:inputText id="amountPaid" value="#{detectionView.detectionSession.amountPaid}"/>
+            <span class="help-inline">
+                <p:message for="amountPaid"/>
+            </span>
+        </div>
+    </div>
+
+    <div class="control-group">
+        <h:outputLabel styleClass="control-label" value="#{sessionMSG.notes}"/>
+        <div class="controls">
+            <h:inputTextarea  value="#{detectionView.detectionSession.notes}"/>    
+        </div>
+    </div>
+    <div class="row" align="center">
+        <p:commandButton styleClass="btn btn-block btn-success"
+                         value="#{sessionMSG.addSession}"
+                         disabled="#{detectionView.activeCloseDetection and detectionView.editActiveDetection}"
+                         actionListener="#{detectionView.addSession()}"
+                         update="sessionGroup"/>
+    </div>             
+
+    <p:dataTable value="#{detectionView.detectionSessionList}" var="dsession" paginator="true" rows="10" style="width: 100%" tableStyleClass="table-striped  table-hover"
+                 paginatorPosition="bottom"  rowKey="#{dsession.detectionSessionId}"  emptyMessage="#{commonMSG.noRec}"
+                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {PageLinks} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                 rowsPerPageTemplate="5,10,20,50,100,200,300">
+        <p:column>
+            <f:facet name="header">
+                <h:outputLabel  value="#{sessionMSG.sessionName}"/>
+            </f:facet>
+            <h:outputLabel  value="#{dsession.detectionSessionName}"/>
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputLabel  value="#{sessionMSG.amountPaid}"/>
+            </f:facet>
+            <h:outputLabel  value="#{dsession.amountPaid}"/>
+        </p:column>
+
+        <p:column>
+            <f:facet name="header">
+                <h:outputLabel  value="#{sessionMSG.notes}"/>
+            </f:facet>
+            <h:outputLabel  value="#{dsession.notes}"/>
+        </p:column>
+    </p:dataTable>
+</h:panelGroup>

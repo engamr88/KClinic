@@ -1,0 +1,62 @@
+<h:panelGroup id="patientDiagnoseGroup" xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:ui="http://java.sun.com/jsf/facelets"
+              xmlns:h="http://java.sun.com/jsf/html"
+              xmlns:f="http://java.sun.com/jsf/core"
+              xmlns:p="http://primefaces.org/ui"
+              >
+    <div class="control-group">
+        <h:outputLabel value="#{caseStudyMSG.caseStudyName}" styleClass="control-label"><font class="red">*</font></h:outputLabel>
+        <div class="controls">
+            <p:autoComplete  var="caseStudy"  styleClass="name-input" value="#{detectionView.selectedCaseStudy}" converter="caseStudy"
+                             id="customPojo" completeMethod="#{detectionView.completePlayerByName}"
+                             itemLabel="#{caseStudy.caseStudyName}" itemValue="#{caseStudy}">
+
+                <p:column>
+                    #{caseStudy.caseStudyName}
+                </p:column>
+            </p:autoComplete>
+            <span class="help-inline">
+                <p:message for="customPojo"/>
+            </span>
+            <span class="help-inline">
+                <p:commandButton styleClass="btn btn-success" value="#{commonMSG.add}" actionListener="#{detectionView.onAutoCompleteItemSelect()}" update="patientRegGoup"/>
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span3">
+            <p:message for="caseStudyId"/>
+            <div class="control-group">
+                <h:outputLabel styleClass="control-label" value="#{detectionMSG.extraFees}"/>
+                <div class="controls">
+                    <h:inputText  value="#{detectionView.extraFees}"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <h:outputLabel styleClass="control-label" value="#{detectionMSG.note}"/>
+                <div class="controls">
+                    <h:inputTextarea  value="#{detectionView.extrafeesNotes}"/>
+                </div>
+            </div>
+        </div>
+        <div class="span8">
+            <h:panelGroup rendered="#{detectionView.patientCases.size()>0}">
+                <div  style="overflow: scroll;
+                      height: 200px;
+                      width: 400px;
+                      margin-right: 50px;">
+                    <p:dataList id="caseStudyId" value="#{detectionView.patientCases}" var="caseStudy" type="ordered" >
+                        <h:outputLabel value="#{caseStudy.caseStudyName}" style="font-weight: bold;font-size: large;"/>
+                    </p:dataList>
+                </div>
+            </h:panelGroup>
+        </div>
+    </div>  
+    <div class="row">
+        <p:commandButton styleClass="btn btn-danger span2" value="#{detectionMSG.closeDiagnose}" disabled="#{!detectionView.activeCloseDetection or detectionView.editActiveDetection}"/>
+        <p:commandButton styleClass="btn btn-success btn-block span8" value="#{detectionMSG.createDiagnose}" rendered="#{!detectionView.activeCloseDetection}" actionListener="#{detectionView.createDiagnose()}" update="patientDiagnoseGroup"/>
+        <p:commandButton styleClass="btn btn-success btn-block span8" value="#{detectionMSG.editDiagnose}" rendered="#{detectionView.activeCloseDetection and !detectionView.editActiveDetection}" actionListener="#{detectionView.editDiagnose()}" update="patientDiagnoseGroup"/>
+        <p:commandButton styleClass="btn btn-success btn-block span8" value="#{detectionMSG.updateDiagnose}" rendered="#{detectionView.activeCloseDetection and detectionView.editActiveDetection}" actionListener="#{detectionView.updateDiagnose()}" update="patientDiagnoseGroup"/>
+
+    </div>
+</h:panelGroup>

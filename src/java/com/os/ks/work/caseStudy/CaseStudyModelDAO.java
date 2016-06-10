@@ -53,6 +53,11 @@ public class CaseStudyModelDAO extends AbstractDAOWrapper<CaseStudyModelWrapper>
         String HQL = "FROM CaseStudy model where model.caseStudyId= " + id;
         return (CaseStudy) uniqueResult(HQL);
     }
+    
+    public CaseStudy loadCaseStudyByName(String caseStudyName) {
+        String HQL = "FROM CaseStudy model where model.caseStudyName= '" + caseStudyName+"'";
+        return (CaseStudy) uniqueResult(HQL);
+    }
 
     @Override
     public boolean checkDuplication(String idName, Integer idvalue, String fieldName, String fieldValue, String extraCondition, String modelClass) {

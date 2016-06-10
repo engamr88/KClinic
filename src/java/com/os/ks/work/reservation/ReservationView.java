@@ -66,9 +66,9 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         todayCal.set(Calendar.MINUTE, 0);
         todayCal.set(Calendar.SECOND, 0);
         today = todayCal.getTime();
-
+        System.out.println("Entered here 00000");
         reservationList = dao.loadReservationList(new Date());
-        patientList = new PatientModelDAO().loadPatientWrapperList();
+        //patientList = new PatientModelDAO().loadPatientWrapperList();
         categoryId = -1;
         doctorId = -1;
         priceId = -1;
@@ -161,8 +161,10 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         dao.getModelWrapper().getModel().setReservationDate(new Date());
         if (reservationList != null && reservationList.isEmpty()) {
             dao.getModelWrapper().getModel().setReservationNumber(1);
+            dao.getModelWrapper().getModel().setCurrent(true);
         } else {
             int temp = 0;
+            dao.getModelWrapper().getModel().setCurrent(false);
             if (reservationList != null) {
                 for (Reservation reserv : reservationList) {
                     if (reserv.getDoctor().getUserId().equals(doctorId)) {
@@ -180,6 +182,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Criteria crit = session.createCriteria(Patient.class);
         crit.add(Restrictions.like("patientFullName", query + "%", MatchMode.ANYWHERE));
+        crit.setMaxResults(5);
         List<Patient> results = crit.list();
         patientList = new ArrayList<>();
         for (Patient patient : results) {
@@ -214,7 +217,7 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
         } else if (doctorId == -1) {
             CommonUtil.ViewValidationMessage("form:doctor", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
             return false;
-        } else if (selectedPatient==null||selectedPatient.getId() == null) {
+        } else if (selectedPatient == null || selectedPatient.getId() == null) {
             CommonUtil.ViewValidationMessage("form:customPojo", FacesMessage.SEVERITY_ERROR, "INFO: ", commonRes.getString("dataReq"));
             return false;
         } else if (priceId == -1 || priceId == null) {
@@ -266,6 +269,9 @@ public class ReservationView extends ViewAbstract<ReservationModelDAO> {
             int temp = 1;
             for (Reservation reserv : reservationList) {
                 reserv.setReservationNumber(temp);
+                if (temp == 1) {
+                    reserv.setCurrent(true);
+                }
                 dao.getModelWrapper().setModel(reserv);
                 dao.update();
                 temp++;

@@ -91,6 +91,6 @@ public class FillDB {
     }
 
     public static void main(String args[]) {
-        new FillDB().loadNurse();
+        new FillDB().loadPatients();
     }
 }

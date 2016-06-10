@@ -7,7 +7,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">root</property>
-        <!--    <property name="hibernate.connection.url">jdbc:mysql://127.11.224.130:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
+        <!--        <property name="hibernate.connection.url">jdbc:mysql://127.11.224.130:3306/kclinic?characterEncoding=utf8&amp;autoReconnect=true</property>
         <property name="hibernate.connection.username">adminBDNLAQ3</property>
         <property name="hibernate.connection.password">7REdsYkdAKA4</property>-->
         <!--<property name="hibernate.hbm2ddl.auto">create</property>-->
@@ -33,9 +33,11 @@
         <property name="maxConnectionAge">21600</property>
         <property name="preferredTestQuery">SELECT 1</property>
         <property name="testConnectionOnCheckin">false</property>
-
+        <property name="preferredTestQuery">SELECT 1 FROM User</property>
+        <property name="testConnectionOnCheckin">true</property>
+        <property name="idleConnectionTestPeriod">1800</property> <!-- 30 minutes -->
         <mapping resource="com/os/models/Prescription.hbm.xml"/>
-        <mapping resource="com/os/models/Session.hbm.xml"/>
+        <mapping resource="com/os/models/DetectionSession.hbm.xml"/>
         <mapping resource="com/os/models/CaseStudy.hbm.xml"/>
         <mapping resource="com/os/models/Medication.hbm.xml"/>
         <mapping resource="com/os/models/Form.hbm.xml"/>

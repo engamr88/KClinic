@@ -18,7 +18,7 @@
             <column name="extra_fees" precision="10" />
         </property>
         <property name="archive">
-            <column name="archive" not-null="true" />
+            <column name="archive" />
         </property>
         <property name="archiveDate" type="timestamp">
             <column name="archive_date" length="19" />
@@ -29,11 +29,11 @@
         <many-to-one name="doctor" class="com.os.models.User" fetch="select">
             <column name="user_id" not-null="true" />
         </many-to-one>
-        <set name="sessions" table="session" inverse="true" lazy="true" fetch="select">
+        <set name="sessions" table="detection_session" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="detection_id" not-null="true" />
             </key>
-            <one-to-many class="com.os.models.Session" />
+            <one-to-many class="com.os.models.DetectionSession" />
         </set>
         <set name="detectionStudies" table="detection_study" inverse="true" lazy="true" fetch="select">
             <key>
